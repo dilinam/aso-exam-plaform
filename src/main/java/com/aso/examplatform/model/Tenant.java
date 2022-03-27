@@ -10,24 +10,20 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class Tenant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long userId;
-    private String username;
-    private String password;
+    private Long tenantId;
 
-    @Column(columnDefinition="tinyint(1) default 1")
+    @Column
+    private String tenantName;
+
+    @Column
+    private String tenantDescription;
+
+    @Column
     private boolean status;
-
-    @ManyToOne
-    @JoinColumn(name="role_id")
-    private Role role;
-
-    @ManyToOne
-    @JoinColumn(name="tenant_id")
-    private Tenant tenant;
 
     @Column(columnDefinition="tinyint(1) default 0")
     private boolean deleted;
