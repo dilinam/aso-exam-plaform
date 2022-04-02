@@ -13,11 +13,11 @@ import javax.validation.constraints.NotNull;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Examinor {
+public class Examiner {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long examinorId;
+    private Long examinerId;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -55,8 +55,8 @@ public class Examinor {
 
     @Override
     public String toString() {
-        return "Examinor{" +
-                "examinor_id=" + examinorId +
+        return "Examiner{" +
+                "examiner_id=" + examinerId +
                 ", user=" + user +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
