@@ -7,17 +7,21 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
-@Entity
 @Data
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Role {
+public class ModuleAction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long roleId;
+    private Long moduleActionId;
 
-    @Column(nullable = false, length = 100, name = "role_name")
-    @NotBlank(message = "Role name must be required.")
-    private String roleName;
+    @ManyToOne
+    @JoinColumn(name = "module_id")
+    private Module module;
+
+    @ManyToOne
+    @JoinColumn(name = "action_id")
+    private Action action;
 }

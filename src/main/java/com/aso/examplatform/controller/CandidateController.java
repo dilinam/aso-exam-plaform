@@ -11,14 +11,17 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+
 @CrossOrigin
 @RestController
 @RequestMapping("/api/candidates")
 @RequiredArgsConstructor
+
 public class CandidateController {
 
     private final CandidateService candidateService;
     private final UserService userService;
+
 
     @GetMapping("")
     public List<Candidate> getAll(){

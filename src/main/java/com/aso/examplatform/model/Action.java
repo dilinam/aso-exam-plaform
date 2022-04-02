@@ -11,13 +11,13 @@ import javax.validation.constraints.NotBlank;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Role {
+public class Action {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long roleId;
+    private Long actionId;
 
-    @Column(nullable = false, length = 100, name = "role_name")
-    @NotBlank(message = "Role name must be required.")
-    private String roleName;
+    @Column(nullable = false, length = 100, name = "action_name")
+    @NotBlank(message = "Action name must be required.")
+    private String actionName;
 }
