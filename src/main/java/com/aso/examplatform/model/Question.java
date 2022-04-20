@@ -10,20 +10,29 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Tenant {
-
+public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long tenantId;
-    private String tenantName;
-    private String description;
+    private Long questionId;
+    private String question;
+    private int order;
 
     @Column(columnDefinition="tinyint(1) default 1")
     private boolean status;
+
+    private String filePath;
 
     @Column(columnDefinition="tinyint(1) default 0")
     private boolean deleted;
 
     private String createdBy;
     private String createdAt;
+
+    @ManyToOne
+    @Column(name = "questionTypeId")
+    private QuestionType questionType;
+
+    @ManyToOne
+    @Column(name = "examId")
+    private Exam exam;
 }

@@ -10,18 +10,14 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RoleModuleAction {
-
+public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long roleModuleActionId;
+    private Long answerId;
+    private String answer;
+    private String correctness;
 
     @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
-
-    @ManyToOne
-    @JoinColumn(name = "module_action_id")
-    private ModuleAction moduleAction;
-
+    @Column(name = "questionId")
+    private Question question;
 }
