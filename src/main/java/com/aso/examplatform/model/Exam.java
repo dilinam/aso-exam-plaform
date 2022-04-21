@@ -29,6 +29,6 @@ public class Exam {
     private String createdAt;
 
     @ManyToOne
-    @Column(name = "courseId")
+    @JoinColumn(name = "courseId")
     private Course course;
 }

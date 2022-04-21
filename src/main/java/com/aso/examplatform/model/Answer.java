@@ -18,6 +18,6 @@ public class Answer {
     private String correctness;
 
     @ManyToOne
-    @Column(name = "questionId")
+    @JoinColumn(name = "questionId")
     private Question question;
 }

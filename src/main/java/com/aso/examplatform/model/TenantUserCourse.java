@@ -16,10 +16,10 @@ public class TenantUserCourse {
     private Long tenant_user_course_id;
 
     @ManyToOne
-    @Column(name = "tenant_user_id")
+    @JoinColumn(name = "tenant_user_id")
     private TenantUser tenantUser;
 
     @ManyToOne
-    @Column(name = "courseId")
+    @JoinColumn(name = "courseId")
     private Course course;
 }

@@ -29,10 +29,10 @@ public class Question {
     private String createdAt;
 
     @ManyToOne
-    @Column(name = "questionTypeId")
+    @JoinColumn(name = "questionTypeId")
     private QuestionType questionType;
 
     @ManyToOne
-    @Column(name = "examId")
+    @JoinColumn(name = "examId")
     private Exam exam;
 }
