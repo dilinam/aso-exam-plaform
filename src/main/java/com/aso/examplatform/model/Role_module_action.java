@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -15,21 +16,9 @@ public class Role_module_action {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long role_module_action;
 
-    public Role_module_action(Long role_module_action) {
-        this.role_module_action = role_module_action;
-    }
-
-    public Long getRole_module_action() {
-        return role_module_action;
-    }
-
-    public void setRole_module_action(Long role_module_action) {
-        this.role_module_action = role_module_action;
-    }
-
     @ManyToMany
     @JoinColumn(name = "role_id")
-    Role role;
+    private List<Role> roles;
 
     @ManyToOne
     @JoinColumn(name = "module_action_id")

@@ -18,25 +18,4 @@ public class Modules {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long module_id;
     private String module_name;
-
-    public Modules(Long module_id, String module_name) {
-        this.module_id = module_id;
-        this.module_name = module_name;
-    }
-
-    public Long getModule_id() {
-        return module_id;
-    }
-
-    public void setModule_id(Long module_id) {
-        this.module_id = module_id;
-    }
-
-    public String getModule_name() {
-        return module_name;
-    }
-
-    public void setModule_name(String module_name) {
-        this.module_name = module_name;
-    }
 }
