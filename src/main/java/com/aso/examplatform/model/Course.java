@@ -10,13 +10,14 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Tenant {
-
+public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long tenantId;
-    private String tenantName;
-    private String description;
+    private Long courseId;
+
+    private String courseName;
+    private String courseDescription;
+    private String courseImage;
 
     @Column(columnDefinition="tinyint(1) default 1")
     private boolean status;
@@ -26,4 +27,8 @@ public class Tenant {
 
     private String createdBy;
     private String createdAt;
+
+    @ManyToOne
+    @JoinColumn(name = "tenantId")
+    private Tenant tenant;
 }

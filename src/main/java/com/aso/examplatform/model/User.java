@@ -16,19 +16,22 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userId;
     private String username;
+    @Column(columnDefinition="TEXT")
     private String password;
+    private String first_name;
+    private String last_name;
+    private String nic;
+    private String address;
+    private String contact_no;
+    private String email;
+    private String dob;
 
     @Column(columnDefinition="tinyint(1) default 1")
     private boolean status;
 
-    @ManyToOne
-    @JoinColumn(name="role_id")
-    private Role role;
-
-    @ManyToOne
-    @JoinColumn(name="tenant_id")
-    private Tenant tenant;
-
-    @Column(columnDefinition="tinyint(1) default 0")
+    @Column(columnDefinition = "tinyint(1) default 1")
     private boolean deleted;
+
+    private String super_admin;
+
 }

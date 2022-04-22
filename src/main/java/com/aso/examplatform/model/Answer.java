@@ -5,19 +5,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Role {
-
+public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long roleId;
+    private Long answerId;
+    private String answer;
+    private String correctness;
 
-    @Column(nullable = false, length = 100, name = "role_name")
-    @NotBlank(message = "Role name must be required.")
-    private String roleName;
+    @ManyToOne
+    @JoinColumn(name = "questionId")
+    private Question question;
 }
