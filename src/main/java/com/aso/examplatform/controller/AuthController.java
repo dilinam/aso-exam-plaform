@@ -32,7 +32,7 @@ public class AuthController {
     public ResponseEntity<JwtToken> setTenant(@RequestBody TenantRequest request){
         JwtToken jwtToken = authService.generateJwtWithTenant(request);
         if(jwtToken == null){
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
         return ResponseEntity.ok().body(jwtToken);
     }

@@ -27,7 +27,7 @@ public class AuthService {
 
         // compare username and password
         Optional<User> optionalUser = userRepository.findByUsername(loginRequest.getUsername());
-        if(optionalUser.isEmpty() || BCrypt.checkpw(loginRequest.getPassword(), optionalUser.get().getPassword())){
+        if(optionalUser.isEmpty() || !BCrypt.checkpw(loginRequest.getPassword(), optionalUser.get().getPassword())){
             return null;
         }
 
@@ -41,8 +41,11 @@ public class AuthService {
         if(tenantRequest.getJwt() == null || tenantRequest.getJwt().trim().equals("") || tenantRequest.getTenant() == null){
             return null;
         }
-
-        String username = jwtTokenUtil.getUsernameFromToken(tenantRequest.getJwt());
-        return new JwtToken(jwtTokenUtil.generateToken(username, tenantRequest.getTenant().toString()));
+        try {
+            String username = jwtTokenUtil.getUsernameFromToken(tenantRequest.getJwt());
+            return new JwtToken(jwtTokenUtil.generateToken(username, tenantRequest.getTenant().toString()));
+        } catch(Exception e){
+            return null;
+        }
     }
 }

@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class TenantUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long tenant_user_id;
+    private Long tenantUserId;
 
     @ManyToOne
     @JoinColumn(name = "tenantId")
