@@ -34,4 +34,22 @@ public class User {
 
     private boolean superAdmin;
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", nic='" + nic + '\'' +
+                ", address='" + address + '\'' +
+                ", contactNo='" + contactNo + '\'' +
+                ", email='" + email + '\'' +
+                ", dob=" + dob +
+                ", status=" + status +
+                ", deleted=" + deleted +
+                ", superAdmin=" + superAdmin +
+                '}';
+    }
 }

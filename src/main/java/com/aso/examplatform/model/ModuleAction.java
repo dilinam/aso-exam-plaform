@@ -25,7 +25,11 @@ public class ModuleAction {
     @JoinColumn(name = "moduleId")
     private Module module;
 
-    @ManyToMany(mappedBy = "moduleActions")
+    @ManyToMany()
+    @JoinTable(
+            name = "module_action_role",
+            joinColumns = @JoinColumn(name = "module_action_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
 
 }
