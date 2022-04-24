@@ -3,7 +3,9 @@ package com.aso.examplatform.service;
 import com.aso.examplatform.dto.JwtToken;
 import com.aso.examplatform.dto.LoginRequest;
 import com.aso.examplatform.dto.TenantRequest;
+import com.aso.examplatform.model.TenantUser;
 import com.aso.examplatform.model.User;
+import com.aso.examplatform.repository.TenantUserRepository;
 import com.aso.examplatform.repository.UserRepository;
 import com.aso.examplatform.util.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,7 @@ import java.util.Optional;
 public class AuthService {
 
     private final UserRepository userRepository;
+    private final TenantUserRepository tenantUserRepository;
     private final JwtTokenUtil jwtTokenUtil;
 
     public JwtToken generateJwtWithoutTenant(LoginRequest loginRequest){
@@ -43,7 +46,18 @@ public class AuthService {
         }
         try {
             String username = jwtTokenUtil.getUsernameFromToken(tenantRequest.getJwt());
-            return new JwtToken(jwtTokenUtil.generateToken(username, tenantRequest.getTenant().toString()));
+            Optional<User> optionalUser = userRepository.findByUsername(username);
+            if(optionalUser.isPresent()){
+                User user = optionalUser.get();
+                Optional<TenantUser> optionalTenantUser = tenantUserRepository.findByTenantIdAndUserId(tenantRequest.getTenant(), user.getUserId());
+                if(optionalTenantUser.isPresent()){
+                    return new JwtToken(jwtTokenUtil.generateToken(username, tenantRequest.getTenant().toString()));
+                }else{
+                    return null;
+                }
+            }else {
+                return null;
+            }
         } catch(Exception e){
             return null;
         }

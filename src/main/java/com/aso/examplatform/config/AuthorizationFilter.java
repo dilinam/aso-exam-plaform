@@ -1,6 +1,10 @@
 package com.aso.examplatform.config;
 
+import com.aso.examplatform.model.ModuleAction;
+import com.aso.examplatform.model.TenantUser;
 import com.aso.examplatform.model.User;
+import com.aso.examplatform.repository.ModuleActionRepository;
+import com.aso.examplatform.repository.TenantUserRepository;
 import com.aso.examplatform.repository.UserRepository;
 import com.aso.examplatform.util.JwtTokenUtil;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -21,6 +25,8 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 
     private final JwtTokenUtil jwtTokenUtil;
     private final UserRepository userRepository;
+    private final TenantUserRepository tenantUserRepository;
+    private final ModuleActionRepository moduleActionRepository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws
@@ -44,10 +50,16 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                 tenantId = jwtTokenUtil.getTenantFromToken(token);
             }catch(IllegalArgumentException e){
                 response.getWriter().write("Invalid Token");
+                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                return;
             }catch(ExpiredJwtException e){
                 response.getWriter().write("Expired Token");
+                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                return;
             }catch(Exception e){
                 response.getWriter().write("Something went wrong");
+                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                return;
             }
         }
 
@@ -59,9 +71,29 @@ public class AuthorizationFilter extends OncePerRequestFilter {
             }
             Optional<User> optionalUser = userRepository.findByUsername(username);
             if(optionalUser.isPresent()){
-                request.setAttribute("USER", optionalUser.get());
-                request.setAttribute("TENANT", tenantId);
-                filterChain.doFilter(request, response);
+                try{
+                    User user = optionalUser.get();
+                    Optional<TenantUser> optionalTenantUser = tenantUserRepository.findByTenantIdAndUserId(Long.valueOf(tenantId), user.getUserId());
+                    if(optionalTenantUser.isPresent()){
+                        Optional<ModuleAction> optionalModuleAction = moduleActionRepository.findByRoleIdAndEndPoint(optionalTenantUser.get().getRole().getRoleId(), request.getRequestURI(), request.getMethod());
+                        if(optionalModuleAction.isPresent()){
+                            // Authorization successful, adding user and tenant objects to request
+                            request.setAttribute("USER", user);
+                            request.setAttribute("TENANT", optionalTenantUser.get().getTenant());
+                            filterChain.doFilter(request, response);
+                        }else{
+                            // If user does not have access to endpoint
+                            response.getWriter().write("Access Defined");
+                            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                        }
+                    }else{
+                        response.getWriter().write("Unauthorized");
+                        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                    }
+                }catch(Exception e){
+                    response.getWriter().write("Unauthorized");
+                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                }
             }else{
                 response.getWriter().write("Unauthorized");
                 response.setStatus(HttpServletResponse.SC_FORBIDDEN);

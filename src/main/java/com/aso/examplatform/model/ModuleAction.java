@@ -16,6 +16,7 @@ public class ModuleAction {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long moduleActionId;
     private String endPoint;
+    private String httpMethod;
 
     @ManyToOne
     @JoinColumn(name = "actionId")
