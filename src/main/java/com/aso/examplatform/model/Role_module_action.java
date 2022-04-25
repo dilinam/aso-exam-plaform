@@ -5,21 +5,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
-
+public class Role_module_action {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long userId;
-    private String username;
-    private String password;
-    private boolean status;
+    private Long role_module_action;
+
+    @ManyToMany
+    @JoinColumn(name = "role_id")
+    private List<Role> roles;
 
     @ManyToOne
-    @JoinColumn(name="role_id")
-    private Role role;
+    @JoinColumn(name = "module_action_id")
+    private Module_action module_action;
 }

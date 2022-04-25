@@ -8,18 +8,18 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class User {
-
+@NoArgsConstructor
+public class Module_action {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long userId;
-    private String username;
-    private String password;
-    private boolean status;
+    private Long module_action_id;
 
     @ManyToOne
-    @JoinColumn(name="role_id")
-    private Role role;
+    @JoinColumn(name = "module_id")
+    private Modules modules;
+
+    @ManyToOne
+    @JoinColumn(name = "action_id")
+    private Actions action;
 }
