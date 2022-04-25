@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Data
@@ -15,12 +16,28 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userId;
+
+    @Column(nullable = false, length = 100, name = "user_name")
+    @NotBlank(message = "User name must be required.")
     private String username;
-    @Column(columnDefinition="TEXT")
+
+    @Column(nullable = false,name = "password",columnDefinition="TEXT")
     private String password;
+
+    @Column(nullable = false, length = 100, name = "first_name")
+    @NotBlank(message = "First name must be required.")
     private String firstName;
+
+    @Column(nullable = false, length = 100, name = "last_name")
+    @NotBlank(message = "Last name must be required.")
     private String lastName;
+
+    @Column(nullable = false, length = 100, name = "nic")
+    @NotBlank(message = "NIC must be required.")
     private String nic;
+
+    @Column(nullable = false, length = 100, name = "address")
+    @NotBlank(message = "Address must be required.")
     private String address;
     private String contactNo;
     private String email;

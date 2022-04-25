@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
@@ -15,6 +16,9 @@ public class ModuleAction {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long moduleActionId;
+
+    @Column(nullable = false, length = 100, name = "module_action_end_point")
+    @NotBlank(message = "End point name must be required.")
     private String endPoint;
     private String httpMethod;
 

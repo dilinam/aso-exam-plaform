@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Data
@@ -14,7 +15,13 @@ public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long questionId;
+
+    @Column(nullable = false, length = 100, name = "question")
+    @NotBlank(message = "Question must be required.")
     private String question;
+
+    @Column(nullable = false, name = "order")
+    @NotBlank(message = "Order must be required.")
     private int order;
 
     @Column(columnDefinition="tinyint(1) default 1")
