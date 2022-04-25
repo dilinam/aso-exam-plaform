@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Data
@@ -15,7 +16,10 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long courseId;
 
+    @Column(nullable = false, length = 100, name = "course_name")
+    @NotBlank(message = "Course name must be required.")
     private String courseName;
+
     private String courseDescription;
     private String courseImage;
 

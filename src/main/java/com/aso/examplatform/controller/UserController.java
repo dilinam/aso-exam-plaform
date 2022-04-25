@@ -4,9 +4,7 @@ import com.aso.examplatform.model.User;
 import com.aso.examplatform.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,5 +18,10 @@ public class UserController {
     @GetMapping("/")
     public ResponseEntity<List<User>> getUsers(){
         return ResponseEntity.ok().body(userService.getUsers());
+    }
+
+    @PostMapping("")
+    public ResponseEntity<User> addUser(@RequestBody User user){
+        return ResponseEntity.ok(userService.addUser(user));
     }
 }

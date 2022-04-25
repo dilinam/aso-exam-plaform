@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Entity
 @Data
@@ -20,4 +21,7 @@ public class Role {
     @Column(nullable = false, length = 100, name = "role_name")
     @NotBlank(message = "Role name must be required.")
     private String roleName;
+
+    @ManyToMany
+    private List<ModuleAction> moduleActions;
 }

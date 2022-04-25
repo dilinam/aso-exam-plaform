@@ -3,7 +3,9 @@ package com.aso.examplatform.service;
 import com.aso.examplatform.dto.JwtToken;
 import com.aso.examplatform.dto.LoginRequest;
 import com.aso.examplatform.dto.TenantRequest;
+import com.aso.examplatform.model.TenantUser;
 import com.aso.examplatform.model.User;
+import com.aso.examplatform.repository.TenantUserRepository;
 import com.aso.examplatform.repository.UserRepository;
 import com.aso.examplatform.util.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,7 @@ import java.util.Optional;
 public class AuthService {
 
     private final UserRepository userRepository;
+    private final TenantUserRepository tenantUserRepository;
     private final JwtTokenUtil jwtTokenUtil;
 
     public JwtToken generateJwtWithoutTenant(LoginRequest loginRequest){
@@ -27,7 +30,7 @@ public class AuthService {
 
         // compare username and password
         Optional<User> optionalUser = userRepository.findByUsername(loginRequest.getUsername());
-        if(optionalUser.isEmpty() || BCrypt.checkpw(loginRequest.getPassword(), optionalUser.get().getPassword())){
+        if(optionalUser.isEmpty() || !BCrypt.checkpw(loginRequest.getPassword(), optionalUser.get().getPassword())){
             return null;
         }
 
@@ -41,8 +44,22 @@ public class AuthService {
         if(tenantRequest.getJwt() == null || tenantRequest.getJwt().trim().equals("") || tenantRequest.getTenant() == null){
             return null;
         }
-
-        String username = jwtTokenUtil.getUsernameFromToken(tenantRequest.getJwt());
-        return new JwtToken(jwtTokenUtil.generateToken(username, tenantRequest.getTenant().toString()));
+        try {
+            String username = jwtTokenUtil.getUsernameFromToken(tenantRequest.getJwt());
+            Optional<User> optionalUser = userRepository.findByUsername(username);
+            if(optionalUser.isPresent()){
+                User user = optionalUser.get();
+                Optional<TenantUser> optionalTenantUser = tenantUserRepository.findByTenantIdAndUserId(tenantRequest.getTenant(), user.getUserId());
+                if(optionalTenantUser.isPresent()){
+                    return new JwtToken(jwtTokenUtil.generateToken(username, tenantRequest.getTenant().toString()));
+                }else{
+                    return null;
+                }
+            }else {
+                return null;
+            }
+        } catch(Exception e){
+            return null;
+        }
     }
 }

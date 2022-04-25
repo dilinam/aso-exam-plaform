@@ -11,12 +11,13 @@ import javax.validation.constraints.NotBlank;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class QuestionType {
+public class Module {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long questionTypeId;
+    private Long moduleId;
 
-    @Column(nullable = false, length = 100, name = "question_type_name")
-    @NotBlank(message = "Question type name must be required.")
-    private String questionTypeName;
+    @Column(nullable = false, length = 100, name = "module_name")
+    @NotBlank(message = "Module name must be required.")
+    private String moduleName;
+
 }
