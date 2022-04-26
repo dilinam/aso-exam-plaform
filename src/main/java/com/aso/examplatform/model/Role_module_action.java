@@ -22,5 +22,5 @@ public class Role_module_action {
 
     @ManyToOne
     @JoinColumn(name = "module_action_id")
-    private Module_action module_action;
+    private ModuleAction module_action;
 }
