@@ -17,7 +17,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userId;
 
-    @Column(nullable = false, length = 100, name = "user_name")
+    @Column(nullable = false, length = 100, name = "username")
     @NotBlank(message = "User name must be required.")
     private String username;
 
