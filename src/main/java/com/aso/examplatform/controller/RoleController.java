@@ -28,18 +28,21 @@ public class RoleController {
     }
 
     @PutMapping(path = "")
-    public ResponseEntity<Role> update(@Valid @RequestBody Role role) throws Exception{
-        return new ResponseEntity<>(roleService.update(role), HttpStatus.OK);
+    public ResponseEntity<Role> update(@Valid @RequestBody Role role){
+        try {
+            return new ResponseEntity<>(roleService.update(role), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Role> get(@PathVariable("id") Long id) throws Exception {
-        return new ResponseEntity<>(roleService.get(id), HttpStatus.OK);
+    public ResponseEntity<Role> get(@PathVariable("id") Long id){
+        try {
+            return new ResponseEntity<>(roleService.get(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Role> delete(@PathVariable("id") Long id) throws Exception {
-        roleService.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 }

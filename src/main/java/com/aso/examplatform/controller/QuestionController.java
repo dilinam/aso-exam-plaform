@@ -28,18 +28,31 @@ public class QuestionController {
     }
 
     @PutMapping(path = "")
-    public ResponseEntity<Question> update(@Valid @RequestBody Question question) throws Exception{
-        return new ResponseEntity<>(questionService.update(question), HttpStatus.OK);
+    public ResponseEntity<Question> update(@Valid @RequestBody Question question){
+        try {
+            return new ResponseEntity<>(questionService.update(question), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Question> get(@PathVariable("id") Long id) throws Exception {
-        return new ResponseEntity<>(questionService.get(id), HttpStatus.OK);
+    public ResponseEntity<Question> get(@PathVariable("id") Long id){
+        try {
+            return new ResponseEntity<>(questionService.get(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Question> delete(@PathVariable("id") Long id) throws Exception {
-        questionService.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Question> delete(@PathVariable("id") Long id){
+        try {
+            questionService.delete(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
     }
 }

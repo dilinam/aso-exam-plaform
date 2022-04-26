@@ -28,18 +28,31 @@ public class ExamController {
     }
 
     @PutMapping(path = "")
-    public ResponseEntity<Exam> update(@Valid @RequestBody Exam exam) throws Exception{
-        return new ResponseEntity<>(examService.update(exam), HttpStatus.OK);
+    public ResponseEntity<Exam> update(@Valid @RequestBody Exam exam){
+        try {
+            return new ResponseEntity<>(examService.update(exam), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Exam> get(@PathVariable("id") Long id) throws Exception {
-        return new ResponseEntity<>(examService.get(id), HttpStatus.OK);
+    public ResponseEntity<Exam> get(@PathVariable("id") Long id){
+        try {
+            return new ResponseEntity<>(examService.get(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Exam> delete(@PathVariable("id") Long id) throws Exception {
-        examService.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Exam> delete(@PathVariable("id") Long id){
+        try {
+            examService.delete(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
     }
 }

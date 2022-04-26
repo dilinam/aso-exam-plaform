@@ -28,18 +28,31 @@ public class CourseController {
     }
 
     @PutMapping(path = "")
-    public ResponseEntity<Course> update(@Valid @RequestBody Course course) throws Exception{
-        return new ResponseEntity<>(courseService.update(course), HttpStatus.OK);
+    public ResponseEntity<Course> update(@Valid @RequestBody Course course){
+        try {
+            return new ResponseEntity<>(courseService.update(course), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Course> get(@PathVariable("id") Long id) throws Exception {
-        return new ResponseEntity<>(courseService.get(id), HttpStatus.OK);
+    public ResponseEntity<Course> get(@PathVariable("id") Long id){
+        try {
+            return new ResponseEntity<>(courseService.get(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Course> delete(@PathVariable("id") Long id) throws Exception {
-        courseService.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Course> delete(@PathVariable("id") Long id){
+            try {
+                courseService.delete(id);
+                return new ResponseEntity<>(HttpStatus.OK);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+
     }
 }
