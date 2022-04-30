@@ -25,5 +25,8 @@ public class Tenant {
     private boolean deleted;
 
     private String createdBy;
-    private String createdAt;
+    private long createdAt;
+
+    private String updatedBy;
+    private long updatedAt;
 }
