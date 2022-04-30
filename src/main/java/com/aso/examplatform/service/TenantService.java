@@ -2,6 +2,7 @@ package com.aso.examplatform.service;
 
 import com.aso.examplatform.repository.TenantRepository;
 import com.aso.examplatform.model.Tenant;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,9 +11,10 @@ import java.util.Optional;
 
 
 @Service
+@RequiredArgsConstructor
 public class TenantService {
-    @Autowired
-    private TenantRepository tenantRepository;
+
+    private final TenantRepository tenantRepository;
 
     public List<Tenant> listAll(){
         return (List<Tenant>) tenantRepository.findAll();
