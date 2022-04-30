@@ -2,6 +2,7 @@ package com.aso.examplatform.controller;
 
 import com.aso.examplatform.dto.ExamRequest;
 import com.aso.examplatform.model.Exam;
+import com.aso.examplatform.model.Question;
 import com.aso.examplatform.service.ExamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,11 @@ public class ExamController {
     @PostMapping(path = "")
     public ResponseEntity<Exam> save(@Valid @RequestBody ExamRequest examRequest){
         return new ResponseEntity<>(examService.create(examRequest), HttpStatus.CREATED);
+    }
+
+    @PutMapping(path = "/Questions")
+    public ResponseEntity<List<Question>> updateQuestions(@Valid @RequestBody ExamRequest examRequest){
+        return new ResponseEntity<>(examService.updateQuestions(examRequest), HttpStatus.OK);
     }
 
     @PutMapping(path = "")

@@ -23,7 +23,7 @@ public class QuestionService {
         return question;
     }
     public Question update(Question question) throws Exception{
-        if (!questionRepository.findById(question.getQuestionId()).isPresent()){
+        if (questionRepository.findById(question.getQuestionId()).isEmpty()){
             throw new Exception("Question not found");
         }
         questionRepository.save(question);
@@ -35,7 +35,7 @@ public class QuestionService {
     }
     public void delete(Long id) throws Exception{
         Optional<Question> questionOptional = questionRepository.findById(id);
-        if (!questionOptional.isPresent()){
+        if (questionOptional.isEmpty()){
             throw new Exception("Exam not found");
         }
         Question question = questionOptional.get();

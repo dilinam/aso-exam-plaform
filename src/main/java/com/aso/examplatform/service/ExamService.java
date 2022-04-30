@@ -30,6 +30,12 @@ public class ExamService {
 
         return examRequest.getExam();
     }
+    public List<Question> updateQuestions(ExamRequest examRequest){
+        questionRepository.deleteAll(examRequest.getQuestions());
+        questionRepository.saveAll(examRequest.getQuestions());
+
+        return examRequest.getQuestions();
+    }
     public Exam update(Exam exam) throws Exception{
         if (examRepository.findById(exam.getExamId()).isEmpty()){
             throw new Exception("Exam not found");
