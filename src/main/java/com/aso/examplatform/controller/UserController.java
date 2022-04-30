@@ -52,18 +52,21 @@ public class UserController {
 
     @PostMapping("/examiner")
     public ResponseEntity<User> addExaminer(@Valid @RequestBody User user, HttpServletRequest request){
+        user.setCreatedBy(((User)request.getAttribute("USER")).getUsername());
         userService.addUser(new UserRequest(user, 2L), (Tenant) request.getAttribute("TENANT"));
         return ResponseEntity.ok(user);
     }
 
     @PostMapping("/tenantAdmin")
     public ResponseEntity<User> addTenantAdmin(@Valid @RequestBody User user, HttpServletRequest request){
+        user.setCreatedBy(((User)request.getAttribute("USER")).getUsername());
         userService.addUser(new UserRequest(user, 1L), (Tenant) request.getAttribute("TENANT"));
         return ResponseEntity.ok(user);
     }
 
     @PostMapping("/superAdmin")
     public ResponseEntity<User> addSuperAdmin(@Valid @RequestBody User user, HttpServletRequest request){
+        user.setCreatedBy(((User)request.getAttribute("USER")).getUsername());
         userService.addSuperAdmin(user);
         return ResponseEntity.ok(user);
     }
