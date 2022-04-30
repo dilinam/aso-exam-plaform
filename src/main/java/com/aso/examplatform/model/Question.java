@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Entity
 @Data
@@ -42,4 +43,7 @@ public class Question {
     @ManyToOne
     @JoinColumn(name = "examId")
     private Exam exam;
+
+    @OneToMany
+    private List<Answer> answers;
 }
