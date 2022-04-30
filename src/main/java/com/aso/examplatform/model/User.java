@@ -44,7 +44,7 @@ public class User {
     private Long dob;
 
     @Column(columnDefinition="tinyint(1) default 1")
-    private boolean status;
+    private boolean status = true;
 
     @Column(columnDefinition = "tinyint(1) default 1")
     private boolean deleted;

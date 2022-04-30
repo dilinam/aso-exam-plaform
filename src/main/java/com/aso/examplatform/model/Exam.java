@@ -30,6 +30,9 @@ public class Exam {
     private String duration;
 
     @Column(columnDefinition="tinyint(1) default 1")
+    private boolean forAll;
+
+    @Column(columnDefinition="tinyint(1) default 1")
     private boolean status;
 
     @Column(columnDefinition="tinyint(1) default 0")
