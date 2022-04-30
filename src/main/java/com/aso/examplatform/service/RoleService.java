@@ -3,19 +3,16 @@ package com.aso.examplatform.service;
 import com.aso.examplatform.model.Exam;
 import com.aso.examplatform.model.Role;
 import com.aso.examplatform.repository.RoleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-
 import java.util.List;
 import java.util.Optional;
+
 @Service
+@RequiredArgsConstructor
 public class RoleService {
-    @Autowired
-    private RoleRepository roleRepository;
+
+    private final RoleRepository roleRepository;
 
     public List<Role> listAll(){
         return (List<Role>) roleRepository.findAll();

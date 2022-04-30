@@ -2,6 +2,7 @@ package com.aso.examplatform.service;
 
 import com.aso.examplatform.model.Course;
 import com.aso.examplatform.repository.CourseRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,9 +10,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class CourseService {
-    @Autowired
-    private CourseRepository courseRepository;
+
+    private final CourseRepository courseRepository;
 
     public List<Course> listAll(){
         return (List<Course>) courseRepository.findAll();
