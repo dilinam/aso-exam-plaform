@@ -22,15 +22,13 @@ public class ExamService {
         return examRepository.findAll();
     }
     public Exam create(ExamRequest examRequest){
-        examRepository.save(examRequest.exam);
-        if(!examRequest.question.isEmpty()){
-            for (Question question: examRequest.question) {
-                question.setExam(examRequest.exam);
+        examRepository.save(examRequest.getExam());
+            for (Question question: examRequest.getQuestions()) {
+                question.setExam(examRequest.getExam());
             }
-            questionRepository.saveAll(examRequest.question);
-        }
+            questionRepository.saveAll(examRequest.getQuestions());
 
-        return examRequest.exam;
+        return examRequest.getExam();
     }
     public Exam update(Exam exam) throws Exception{
         if (examRepository.findById(exam.getExamId()).isEmpty()){
