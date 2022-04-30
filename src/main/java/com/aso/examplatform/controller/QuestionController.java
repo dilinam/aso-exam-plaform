@@ -1,7 +1,7 @@
 package com.aso.examplatform.controller;
 
-import com.aso.examplatform.model.Exam;
-import com.aso.examplatform.service.ExamService;
+import com.aso.examplatform.model.Question;
+import com.aso.examplatform.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,43 +12,43 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/exam")
+@RequestMapping("/api/Question")
 @RequiredArgsConstructor
-public class ExamController {
-    private final ExamService examService;
+public class QuestionController {
+    private QuestionService questionService;
 
     @GetMapping("")
-    public List<Exam> getAll(){
-        return examService.listAll();
+    public List<Question> getAll(){
+        return questionService.listAll();
     }
 
     @PostMapping(path = "")
-    public ResponseEntity<Exam> save(@Valid @RequestBody Exam newExam){
-        return new ResponseEntity<>(examService.create(newExam), HttpStatus.CREATED);
+    public ResponseEntity<Question> save(@Valid @RequestBody Question newQuestion){
+        return new ResponseEntity<>(questionService.create(newQuestion), HttpStatus.CREATED);
     }
 
     @PutMapping(path = "")
-    public ResponseEntity<Exam> update(@Valid @RequestBody Exam exam){
+    public ResponseEntity<Question> update(@Valid @RequestBody Question question){
         try {
-            return new ResponseEntity<>(examService.update(exam), HttpStatus.OK);
+            return new ResponseEntity<>(questionService.update(question), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Exam> get(@PathVariable("id") Long id){
+    public ResponseEntity<Question> get(@PathVariable("id") Long id){
         try {
-            return new ResponseEntity<>(examService.get(id), HttpStatus.OK);
+            return new ResponseEntity<>(questionService.get(id), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Exam> delete(@PathVariable("id") Long id){
+    public ResponseEntity<Question> delete(@PathVariable("id") Long id){
         try {
-            examService.delete(id);
+            questionService.delete(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

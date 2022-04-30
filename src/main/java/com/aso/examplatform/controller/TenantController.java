@@ -1,7 +1,7 @@
 package com.aso.examplatform.controller;
 
-import com.aso.examplatform.model.Exam;
-import com.aso.examplatform.service.ExamService;
+import com.aso.examplatform.model.Tenant;
+import com.aso.examplatform.service.TenantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,43 +12,43 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/exam")
+@RequestMapping("/api/Tenant")
 @RequiredArgsConstructor
-public class ExamController {
-    private final ExamService examService;
+public class TenantController {
+    private TenantService tenantService;
 
     @GetMapping("")
-    public List<Exam> getAll(){
-        return examService.listAll();
+    public List<Tenant> getAll(){
+        return tenantService.listAll();
     }
 
     @PostMapping(path = "")
-    public ResponseEntity<Exam> save(@Valid @RequestBody Exam newExam){
-        return new ResponseEntity<>(examService.create(newExam), HttpStatus.CREATED);
+    public ResponseEntity<Tenant> save(@Valid @RequestBody Tenant newTenant){
+        return new ResponseEntity<>(tenantService.create(newTenant), HttpStatus.CREATED);
     }
 
     @PutMapping(path = "")
-    public ResponseEntity<Exam> update(@Valid @RequestBody Exam exam){
+    public ResponseEntity<Tenant> update(@Valid @RequestBody Tenant tenant){
         try {
-            return new ResponseEntity<>(examService.update(exam), HttpStatus.OK);
+            return new ResponseEntity<>(tenantService.update(tenant), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Exam> get(@PathVariable("id") Long id){
+    public ResponseEntity<Tenant> get(@PathVariable("id") Long id){
         try {
-            return new ResponseEntity<>(examService.get(id), HttpStatus.OK);
+            return new ResponseEntity<>(tenantService.get(id), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Exam> delete(@PathVariable("id") Long id){
+    public ResponseEntity<Tenant> delete(@PathVariable("id") Long id) {
         try {
-            examService.delete(id);
+            tenantService.delete(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -56,3 +56,4 @@ public class ExamController {
 
     }
 }
+

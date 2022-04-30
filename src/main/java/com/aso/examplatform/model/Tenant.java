@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 @Entity
 @Data
@@ -16,9 +15,6 @@ public class Tenant {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long tenantId;
-
-    @Column(nullable = false, length = 100, name = "tenant_name")
-    @NotBlank(message = "Tenant name must be required.")
     private String tenantName;
     private String description;
 

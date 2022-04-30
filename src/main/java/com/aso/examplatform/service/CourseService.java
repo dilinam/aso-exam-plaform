@@ -31,7 +31,7 @@ public class CourseService {
         Optional<Course> result = courseRepository.findById(id);
         return result.orElseThrow(() -> new Exception("Course not found"));
     }
-    public void delete(Long id) throws Exception{
+    public void delete(Long id) throws Exception {
         Optional<Course> courseOptional = courseRepository.findById(id);
         if (!courseOptional.isPresent()){
             throw new Exception("Course not found");
