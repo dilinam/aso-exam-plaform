@@ -23,8 +23,8 @@ public class CourseController {
     }
 
     @PostMapping(path = "")
-    public ResponseEntity<Course> save(@Valid @RequestBody Course newCourse){
-        return new ResponseEntity<>(courseService.create(newCourse), HttpStatus.CREATED);
+    public ResponseEntity<Course> save(@Valid @RequestBody Course course){
+        return new ResponseEntity<>(courseService.create(course), HttpStatus.CREATED);
     }
 
     @PutMapping(path = "")
@@ -53,6 +53,5 @@ public class CourseController {
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-
     }
 }
