@@ -34,6 +34,7 @@ public class UserController {
     }
     @PostMapping("")
     public ResponseEntity<?> addUser(@Valid @RequestBody UserRequest userRequest, HttpServletRequest request){
+        userRequest.getUser().setCreatedBy(((User)request.getAttribute("USER")).getUsername());
         TenantUser tenantUser = userService.addUser(userRequest,(Tenant) request.getAttribute("TENANT"));
         if(tenantUser == null){
             Map<String, String> validationResults = new HashMap<>();
