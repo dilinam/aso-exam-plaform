@@ -36,7 +36,7 @@ public class TenantService {
     }
     public void delete(Long id) throws Exception{
         Optional<Tenant> tenantOptional = tenantRepository.findById(id);
-        if (!tenantOptional.isPresent()){
+        if (tenantOptional.isEmpty()){
             throw new Exception("Tenant not found");
         }
         Tenant tenant = tenantOptional.get();
