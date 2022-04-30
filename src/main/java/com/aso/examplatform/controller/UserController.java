@@ -42,4 +42,28 @@ public class UserController {
         }
         return ResponseEntity.ok(userService.addUser(userRequest,(Tenant) request.getAttribute("TENANT")));
     }
+
+    @PostMapping("/candidate")
+    public ResponseEntity<User> addCandidate(@Valid @RequestBody User user, HttpServletRequest request){
+        userService.addUser(new UserRequest(user, 3L), (Tenant) request.getAttribute("TENANT"));
+        return ResponseEntity.ok(user);
+    }
+
+    @PostMapping("/examiner")
+    public ResponseEntity<User> addExaminer(@Valid @RequestBody User user, HttpServletRequest request){
+        userService.addUser(new UserRequest(user, 2L), (Tenant) request.getAttribute("TENANT"));
+        return ResponseEntity.ok(user);
+    }
+
+    @PostMapping("/tenantAdmin")
+    public ResponseEntity<User> addTenantAdmin(@Valid @RequestBody User user, HttpServletRequest request){
+        userService.addUser(new UserRequest(user, 1L), (Tenant) request.getAttribute("TENANT"));
+        return ResponseEntity.ok(user);
+    }
+
+    @PostMapping("/superAdmin")
+    public ResponseEntity<User> addSuperAdmin(@Valid @RequestBody User user, HttpServletRequest request){
+        userService.addSuperAdmin(user);
+        return ResponseEntity.ok(user);
+    }
 }

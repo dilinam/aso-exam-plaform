@@ -43,4 +43,11 @@ public class UserService {
         TenantUser tenantUser = new TenantUser(tenant,userRequest.getUser(),roleOptional.get());
         return tenantUserRepository.save(tenantUser);
     }
+
+    public User addSuperAdmin(User user){
+        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+        user.setSuperAdmin(true);
+        userRepository.save(user);
+        return user;
+    }
 }

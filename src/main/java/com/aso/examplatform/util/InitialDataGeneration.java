@@ -50,9 +50,9 @@ public class InitialDataGeneration implements CommandLineRunner {
             tenants = tenantRepository.saveAll(tenants);
 
             // save roles
-            roles.add(new Role(null, "TENANT_ADMIN", null));
-            roles.add(new Role(null, "INVIGILATOR", null));
-            roles.add(new Role(null, "CANDIDATE", null));
+            roles.add(new Role(1L, "TENANT_ADMIN", null));
+            roles.add(new Role(2L, "EXAMINER", null));
+            roles.add(new Role(3L, "CANDIDATE", null));
             roles = roleRepository.saveAll(roles);
 
             // save tenant users
