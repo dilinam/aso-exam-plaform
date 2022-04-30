@@ -23,8 +23,8 @@ public class TenantController {
     }
 
     @PostMapping(path = "")
-    public ResponseEntity<Tenant> save(@Valid @RequestBody Tenant newTenant){
-        return new ResponseEntity<>(tenantService.create(newTenant), HttpStatus.CREATED);
+    public ResponseEntity<Tenant> save(@Valid @RequestBody Tenant Tenant){
+        return new ResponseEntity<>(tenantService.create(Tenant), HttpStatus.CREATED);
     }
 
     @PutMapping(path = "")

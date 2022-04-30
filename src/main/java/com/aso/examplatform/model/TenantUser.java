@@ -32,4 +32,10 @@ public class TenantUser {
 
     @Column(columnDefinition="tinyint(1) default 0")
     private boolean deleted;
+
+    public TenantUser(Tenant tenant, User user, Role role) {
+        this.tenant = tenant;
+        this.user = user;
+        this.role = role;
+    }
 }
