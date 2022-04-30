@@ -6,7 +6,6 @@ import com.aso.examplatform.model.Question;
 import com.aso.examplatform.repository.ExamRepository;
 import com.aso.examplatform.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +19,7 @@ public class ExamService {
     private final QuestionRepository questionRepository;
 
     public List<Exam> listAll(){
-        return (List<Exam>) examRepository.findAll();
+        return examRepository.findAll();
     }
     public Exam create(ExamRequest examRequest){
         examRepository.save(examRequest.exam);
@@ -34,7 +33,7 @@ public class ExamService {
         return examRequest.exam;
     }
     public Exam update(Exam exam) throws Exception{
-        if (!examRepository.findById(exam.getExamId()).isPresent()){
+        if (examRepository.findById(exam.getExamId()).isEmpty()){
             throw new Exception("Exam not found");
         }
         examRepository.save(exam);
@@ -46,7 +45,7 @@ public class ExamService {
     }
     public void delete(Long id) throws Exception{
         Optional<Exam> examOptional = examRepository.findById(id);
-        if (!examOptional.isPresent()){
+        if (examOptional.isEmpty()){
             throw new Exception("Exam not found");
         }
         Exam exam = examOptional.get();
