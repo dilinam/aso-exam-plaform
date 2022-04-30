@@ -3,9 +3,11 @@ package com.aso.examplatform.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.sql.Timestamp;
 
 @Entity
 @Data
@@ -50,6 +52,11 @@ public class User {
     private boolean deleted;
 
     private boolean superAdmin;
+
+//    @CreationTimestamp
+    private Long createdAt;
+
+    private String createdBy;
 
     @Override
     public String toString() {

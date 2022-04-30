@@ -83,7 +83,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                             filterChain.doFilter(request, response);
                         }else{
                             // If user does not have access to endpoint
-                            response.getWriter().write("Access Defined");
+                            response.getWriter().write("Access Denied");
                             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                         }
                     }else{
