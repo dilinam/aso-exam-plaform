@@ -42,7 +42,7 @@ public class InitialDataGeneration implements CommandLineRunner {
             // save user
             users.add(new User(null, "dilina", BCrypt.hashpw("1234", BCrypt.gensalt()),
                     "Dilina", "Madhushan", "961111111v", "abc, abc", "1234567890",
-                    "dilina@gmail.com", 833736600L, true, false, false));
+                    "dilina@gmail.com", 833736600L, true, false, false, null, null));
             users = userRepository.saveAll(users);
 
             // save tenants
@@ -85,6 +85,8 @@ public class InitialDataGeneration implements CommandLineRunner {
                             actions.get(i),userModule, roles));
                 }else if(actions.get(i).getActionName().equals("ADD")){
                     moduleActions.add(new ModuleAction(null, "/api/users", "POST",
+                            actions.get(i),userModule, roles));
+                    moduleActions.add(new ModuleAction(null, "/api/users/candidate", "POST",
                             actions.get(i),userModule, roles));
                 }else if(actions.get(i).getActionName().equals("UPDATE")){
                     moduleActions.add(new ModuleAction(null, "/api/users", "PUT",

@@ -45,6 +45,7 @@ public class UserController {
 
     @PostMapping("/candidate")
     public ResponseEntity<User> addCandidate(@Valid @RequestBody User user, HttpServletRequest request){
+        user.setCreatedBy(((User)request.getAttribute("USER")).getUsername());
         userService.addUser(new UserRequest(user, 3L), (Tenant) request.getAttribute("TENANT"));
         return ResponseEntity.ok(user);
     }
