@@ -68,7 +68,7 @@ public class CourseController {
             }
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/candidate/{id}")
     public ResponseEntity<List<User>> getCandidateCourse(@PathVariable("courseId") Long courseId){
         try {
             return new ResponseEntity<>(courseService.getCandidates(courseId), HttpStatus.OK);
