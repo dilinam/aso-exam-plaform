@@ -81,20 +81,11 @@ public class ExamService {
         return examUserRepository.saveAll(examUsers);
     }
     public List<User> getAllCandidateExam(Long id) throws Exception{
-        Optional<Exam> examOptional = examRepository.findById(id);
-        if (examOptional.isEmpty()){
-            throw new Exception("Exam not found");
-        }
-        Optional<List<User>> users = examUserRepository.findUsersByExamId(examOptional.get().getExamId());
-        return users.get();
-
+        Exam exam = examRepository.findById(id).orElseThrow(() -> new Exception("Exam not found")); // GET exam by id or throw exception
+        return examUserRepository.findUsersByExamId(exam.getExamId()); // Get users by exam id
     }
     public List<Question> getAllQuestion(Long id) throws Exception{
-        Optional<Exam> examOptional = examRepository.findById(id);
-        if (examOptional.isEmpty()){
-            throw new Exception("Exam not found");
-        }
-        Optional<List<Question>> Questions = questionRepository.findAllQuestionsByExamId(examOptional.get().getExamId());
-        return Questions.get();
+        Exam exam = examRepository.findById(id).orElseThrow(() -> new Exception("Exam not found")); // GET exam by id or throw exception
+        return questionRepository.findAllQuestionsByExamId(exam.getExamId()); // GET questions by exam id
     }
 }

@@ -14,5 +14,5 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     void deleteAllByExamId(Long examId);
 
     @Query("SELECT q FROM Question q  WHERE q.exam.examId=?1")
-    Optional<List<Question>> findAllQuestionsByExamId(Long examId);
+    List<Question> findAllQuestionsByExamId(Long examId);
 }

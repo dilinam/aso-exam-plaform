@@ -12,5 +12,5 @@ import java.util.Optional;
 
 public interface ExamUserRepository extends JpaRepository<ExamUser,Long> {
     @Query("SELECT xu.user FROM ExamUser xu WHERE xu.exam.examId=?1")
-    Optional<List<User>> findUsersByExamId(Long examId);
+    List<User> findUsersByExamId(Long examId);
 }
