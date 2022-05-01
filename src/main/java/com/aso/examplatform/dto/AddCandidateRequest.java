@@ -12,9 +12,11 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AddCandidate {
+public class AddCandidateRequest {
     @NotNull
     private List<Long> tenantUserID;
-    @Valid
-    private Exam exam;
+    @NotNull
+    private Long examId;
+    @NotNull
+    private boolean forAll;
 }

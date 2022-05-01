@@ -1,6 +1,6 @@
 package com.aso.examplatform.controller;
 
-import com.aso.examplatform.dto.AddCandidate;
+import com.aso.examplatform.dto.AddCandidateRequest;
 import com.aso.examplatform.dto.ExamRequest;
 import com.aso.examplatform.model.Exam;
 import com.aso.examplatform.model.ExamUser;
@@ -31,9 +31,9 @@ public class ExamController {
         return new ResponseEntity<>(examService.create(examRequest), HttpStatus.CREATED);
     }
     @PostMapping(path = "/candidate")
-    public ResponseEntity<List<ExamUser>> save(@Valid @RequestBody AddCandidate addCandidate){
+    public ResponseEntity<List<ExamUser>> save(@Valid @RequestBody AddCandidateRequest addCandidateRequest){
         try {
-            return new ResponseEntity<>(examService.addCandidateExam(addCandidate), HttpStatus.CREATED);
+            return new ResponseEntity<>(examService.addCandidateExam(addCandidateRequest), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
