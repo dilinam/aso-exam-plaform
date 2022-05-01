@@ -1,22 +1,19 @@
 package com.aso.examplatform.dto;
 
-import com.aso.examplatform.model.Exam;
+import com.aso.examplatform.model.Question;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class AddCandidateRequest {
+@NoArgsConstructor
+public class UpdateQuestionRequest {
     @NotNull
-    private List<Long> tenantUserIds;
+    private List<Question> questions;
     @NotNull
     private Long examId;
-    @NotNull
-    private boolean forAll;
 }
