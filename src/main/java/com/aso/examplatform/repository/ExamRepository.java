@@ -8,6 +8,5 @@ import java.util.List;
 
 
 public interface ExamRepository extends JpaRepository<Exam, Long> {
-    @Query("SELECT ex FROM Exam ex WHERE ex.deleted=false")
-    List<Exam> findAllNotDeleted();
+    List<Exam> findAllNotDeleted(boolean deleted);
 }
