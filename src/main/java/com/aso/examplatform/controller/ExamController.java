@@ -6,6 +6,7 @@ import com.aso.examplatform.dto.UpdateQuestionRequest;
 import com.aso.examplatform.model.Exam;
 import com.aso.examplatform.model.ExamUser;
 import com.aso.examplatform.model.Question;
+import com.aso.examplatform.model.User;
 import com.aso.examplatform.service.ExamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -63,6 +64,22 @@ public class ExamController {
     public ResponseEntity<Exam> get(@PathVariable("id") Long id){
         try {
             return new ResponseEntity<>(examService.get(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    @GetMapping("/examUser/{id}")
+    public ResponseEntity<List<User>> getAllCandidateExam(@PathVariable("id") Long id){
+        try {
+            return new ResponseEntity<>(examService.getAllCandidateExam(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    @GetMapping("/examQuestion/{id}")
+    public ResponseEntity<List<Question>> getAllQuestion(@PathVariable("id") Long id){
+        try {
+            return new ResponseEntity<>(examService.getAllQuestion(id), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
