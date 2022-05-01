@@ -26,7 +26,7 @@ public class ExamService {
     private final ExamUserRepository examUserRepository;
 
     public List<Exam> listAll(){
-        return examRepository.findAll();
+        return examRepository.findAllNotDeleted();
     }
     public Exam create(ExamRequest examRequest){
         examRepository.save(examRequest.getExam());
