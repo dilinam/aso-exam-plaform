@@ -2,6 +2,7 @@ package com.aso.examplatform.repository;
 
 import com.aso.examplatform.model.TenantUser;
 import com.aso.examplatform.model.TenantUserCourse;
+import com.aso.examplatform.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -11,6 +12,6 @@ public interface TenantUserCourseRepository extends JpaRepository<TenantUserCour
     @Query("SELECT u FROM TenantUser u JOIN TenantUserCourse uc WHERE uc.course.courseId=?1")
     List<TenantUser> findTenantUserByCourseId(Long courseId);
 
-    @Query("SELECT tenantUser FROM TenantUserCourse WHERE course.courseId=?1")
-    List<TenantUser> findAllById(Long id);
+    @Query("SELECT tenantUser.user FROM TenantUserCourse WHERE course.courseId=?1")
+    List<User> findAllByCourseId(Long id);
 }

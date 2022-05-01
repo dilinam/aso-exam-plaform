@@ -4,6 +4,7 @@ import com.aso.examplatform.dto.CourseCandidatesRequest;
 import com.aso.examplatform.model.Course;
 import com.aso.examplatform.model.TenantUser;
 import com.aso.examplatform.model.TenantUserCourse;
+import com.aso.examplatform.model.User;
 import com.aso.examplatform.service.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -68,9 +69,9 @@ public class CourseController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<List<TenantUser>> getCandidateCourse(@PathVariable("id") Long id){
+    public ResponseEntity<List<User>> getCandidateCourse(@PathVariable("courseId") Long courseId){
         try {
-            return new ResponseEntity<>(courseService.getCandidates(id), HttpStatus.OK);
+            return new ResponseEntity<>(courseService.getCandidates(courseId), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

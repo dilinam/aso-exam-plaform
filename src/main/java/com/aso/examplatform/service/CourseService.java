@@ -41,9 +41,8 @@ public class CourseService {
         return result.orElseThrow(() -> new Exception("Course not found"));
     }
 
-    public List<TenantUser> getCandidates(Long id){
-        List<TenantUser> courseResult = tenantUserCourseRepository.findAllById(id);
-        return courseResult;
+    public List<User> getCandidates(Long courseId){
+        return tenantUserCourseRepository.findAllByCourseId(courseId);
     }
 
     public void delete(Long id) throws Exception {
