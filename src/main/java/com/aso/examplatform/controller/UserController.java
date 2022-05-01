@@ -75,4 +75,13 @@ public class UserController {
         userService.addSuperAdmin(user);
         return ResponseEntity.ok(user);
     }
+
+    @PutMapping("")
+    public ResponseEntity<User> updateUser(@Valid @RequestBody User user){
+        try{
+            return new ResponseEntity<>(userService.updateUser(user), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }

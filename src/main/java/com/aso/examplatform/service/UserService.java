@@ -51,4 +51,9 @@ public class UserService {
         userRepository.save(user);
         return user;
     }
+
+    public User updateUser(User user) throws Exception{
+        user = userRepository.findById(user.getUserId()).orElseThrow(() -> new Exception("User not found"));
+        return userRepository.save(user);
+    }
 }

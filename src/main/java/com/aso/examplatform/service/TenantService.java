@@ -17,22 +17,21 @@ public class TenantService {
     private final TenantRepository tenantRepository;
 
     public List<Tenant> listAll(){
-        return (List<Tenant>) tenantRepository.findAll();
+        return tenantRepository.findAllByDeleted(false);
     }
     public Tenant create(Tenant tenant){
         tenantRepository.save(tenant);
         return tenant;
     }
     public Tenant update(Tenant tenant) throws Exception{
-        if (!tenantRepository.findById(tenant.getTenantId()).isPresent()){
+        if (tenantRepository.findById(tenant.getTenantId()).isEmpty()){
             throw new Exception("Tenant not found");
         }
         tenantRepository.save(tenant);
         return tenant;
     }
     public Tenant get(Long id) throws Exception{
-        Optional<Tenant> result = tenantRepository.findById(id);
-        return result.orElseThrow(() -> new Exception("Tenant not found"));
+        return tenantRepository.findById(id).orElseThrow(() -> new Exception("Tenant not found"));
     }
     public void delete(Long id) throws Exception{
         Optional<Tenant> tenantOptional = tenantRepository.findById(id);
