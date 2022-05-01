@@ -24,7 +24,7 @@ public class UserService {
     private final RoleRepository roleRepository;
 
     public List<User> getUsers() {
-        return userRepository.findAll();
+        return userRepository.findAllByDeleted(false);
     }
 
     public User getUser(Long userId) {
