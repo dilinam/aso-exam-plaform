@@ -10,4 +10,6 @@ import java.util.List;
 public interface TenantUserCourseRepository extends JpaRepository<TenantUserCourse, Long> {
     @Query("SELECT u FROM TenantUser u JOIN TenantUserCourse uc WHERE uc.course.courseId=?1")
     List<TenantUser> findTenantUserByCourseId(Long courseId);
+
+    List<TenantUser> findAllById(Long id);
 }

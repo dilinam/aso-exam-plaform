@@ -41,6 +41,11 @@ public class CourseService {
         return result.orElseThrow(() -> new Exception("Course not found"));
     }
 
+    public List<TenantUser> getCandidates(Long id){
+        List<TenantUser> courseResult = tenantUserCourseRepository.findAllById(id);
+        return courseResult;
+    }
+
     public void delete(Long id) throws Exception {
         Optional<Course> courseOptional = courseRepository.findById(id);
         if (courseOptional.isEmpty()) {

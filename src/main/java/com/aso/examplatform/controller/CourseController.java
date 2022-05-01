@@ -2,6 +2,7 @@ package com.aso.examplatform.controller;
 
 import com.aso.examplatform.dto.CourseCandidatesRequest;
 import com.aso.examplatform.model.Course;
+import com.aso.examplatform.model.TenantUser;
 import com.aso.examplatform.model.TenantUserCourse;
 import com.aso.examplatform.service.CourseService;
 import lombok.RequiredArgsConstructor;
@@ -64,5 +65,14 @@ public class CourseController {
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<List<TenantUser>> getCandidateCourse(@PathVariable("id") Long id){
+        try {
+            return new ResponseEntity<>(courseService.getCandidates(id), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
