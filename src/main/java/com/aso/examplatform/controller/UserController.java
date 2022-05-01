@@ -30,7 +30,11 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getuser(@PathVariable("id") Long id){
-        return ResponseEntity.ok().body(userService.getUser(id));
+        try {
+            return new ResponseEntity<>(userService.getUser(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
     @PostMapping("")
     public ResponseEntity<?> addUser(@Valid @RequestBody UserRequest userRequest, HttpServletRequest request){
