@@ -13,6 +13,8 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class ExceptionHandler {
+
+    // Model and DTO validation exception handling and set validation messages to response
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @org.springframework.web.bind.annotation.ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
