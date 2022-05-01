@@ -1,9 +1,11 @@
 package com.aso.examplatform.service;
 
-import com.aso.examplatform.model.Course;
+import com.aso.examplatform.dto.CourseCandidatesRequest;
+import com.aso.examplatform.model.*;
 import com.aso.examplatform.repository.CourseRepository;
+import com.aso.examplatform.repository.TenantUserCourseRepository;
+import com.aso.examplatform.repository.TenantUserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,32 +16,51 @@ import java.util.Optional;
 public class CourseService {
 
     private final CourseRepository courseRepository;
+    private final TenantUserCourseRepository tenantUserCourseRepository;
+    private final TenantUserRepository tenantUserRepository;
 
-    public List<Course> listAll(){
+    public List<Course> listAll() {
         return (List<Course>) courseRepository.findAll();
     }
-    public Course create(Course course){
+
+    public Course create(Course course) {
         courseRepository.save(course);
         return course;
     }
-    public Course update(Course course) throws Exception{
-        if (courseRepository.findById(course.getCourseId()).isEmpty()){
+
+    public Course update(Course course) throws Exception {
+        if (courseRepository.findById(course.getCourseId()).isEmpty()) {
             throw new Exception("Course not found");
         }
         courseRepository.save(course);
         return course;
     }
-    public Course get(Long id) throws Exception{
+
+    public Course get(Long id) throws Exception {
         Optional<Course> result = courseRepository.findById(id);
         return result.orElseThrow(() -> new Exception("Course not found"));
     }
+
     public void delete(Long id) throws Exception {
         Optional<Course> courseOptional = courseRepository.findById(id);
-        if (courseOptional.isEmpty()){
+        if (courseOptional.isEmpty()) {
             throw new Exception("Course not found");
         }
         Course course = courseOptional.get();
         course.setDeleted(true);
         courseRepository.save(course);
+    }
+
+    public List<TenantUserCourse> addCandidatesToCourse(CourseCandidatesRequest courseCandidatesRequest) throws Exception {
+        Optional<Course> courseOptional = courseRepository.findById(courseCandidatesRequest.getCourseId());
+        List<TenantUserCourse> tenantUserCourses = null;
+        if (courseOptional.isEmpty()) {
+            throw new Exception("Course not found");
+        } else {
+            for (Long id : courseCandidatesRequest.getTenantUsers()) {
+                tenantUserCourses.add(new TenantUserCourse(null,tenantUserRepository.findById(id).orElseThrow(() -> new Exception("User not found")), courseOptional.get()));
+            }
+            return tenantUserCourseRepository.saveAll(tenantUserCourses);
+        }
     }
 }

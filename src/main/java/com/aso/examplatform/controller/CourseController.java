@@ -1,6 +1,8 @@
 package com.aso.examplatform.controller;
 
+import com.aso.examplatform.dto.CourseCandidatesRequest;
 import com.aso.examplatform.model.Course;
+import com.aso.examplatform.model.TenantUserCourse;
 import com.aso.examplatform.service.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -42,6 +44,15 @@ public class CourseController {
             return new ResponseEntity<>(courseService.get(id), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping(path = "/candidate")
+    public ResponseEntity<List<TenantUserCourse>> addCandidate(@Valid @RequestBody CourseCandidatesRequest courseCandidatesRequest){
+        try {
+            return new ResponseEntity<>(courseService.addCandidatesToCourse(courseCandidatesRequest), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
