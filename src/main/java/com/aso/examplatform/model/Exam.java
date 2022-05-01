@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Exam {
+public class Exam{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long examId;

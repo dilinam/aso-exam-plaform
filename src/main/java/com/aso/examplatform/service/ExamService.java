@@ -13,6 +13,7 @@ import com.aso.examplatform.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,24 +31,25 @@ public class ExamService {
     }
     public Exam create(ExamRequest examRequest){
         examRepository.save(examRequest.getExam());
+        List<Question> questionList = new ArrayList<>();
             for (Question question: examRequest.getQuestions()) {
                 question.setExam(examRequest.getExam());
+
+                questionList.add(question);
             }
-            questionRepository.saveAll(examRequest.getQuestions());
+        questionRepository.saveAll(questionList);
 
         return examRequest.getExam();
     }
     public List<Question> updateQuestions(ExamRequest examRequest){
         questionRepository.deleteAll(examRequest.getQuestions());
-        List<Question> questionList = null ;
+        List<Question> questionList = new ArrayList<>();
         for (Question question: examRequest.getQuestions()) {
             question.setExam(examRequest.getExam());
-            assert false;
             questionList.add(question);
         }
-        assert false;
         questionRepository.saveAll(questionList);
-        return examRequest.getQuestions();
+        return questionList;
     }
     public Exam update(Exam exam) throws Exception{
         if (examRepository.findById(exam.getExamId()).isEmpty()){
@@ -71,11 +73,11 @@ public class ExamService {
     }
     public List<ExamUser> addCandidateExam(AddCandidateRequest addCandidateRequest) throws Exception {
         Optional<Exam> examOptional = examRepository.findById(addCandidateRequest.getExamId());
-        List<ExamUser> examUser;
+        List<ExamUser> examUser ;
         if (examOptional.isEmpty()) {
             throw new Exception("Exam not found");
         } else {
-            examUser = null;
+            examUser = new ArrayList<>();;
             if (addCandidateRequest.isForAll()) {
                 examOptional.get().setForAll(true);
                 examRepository.save(examOptional.get());
