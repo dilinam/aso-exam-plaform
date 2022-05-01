@@ -3,14 +3,8 @@ package com.aso.examplatform.service;
 import com.aso.examplatform.dto.AddCandidateRequest;
 import com.aso.examplatform.dto.ExamRequest;
 import com.aso.examplatform.dto.UpdateQuestionRequest;
-import com.aso.examplatform.model.Exam;
-import com.aso.examplatform.model.ExamUser;
-import com.aso.examplatform.model.Question;
-import com.aso.examplatform.model.User;
-import com.aso.examplatform.repository.ExamRepository;
-import com.aso.examplatform.repository.ExamUserRepository;
-import com.aso.examplatform.repository.QuestionRepository;
-import com.aso.examplatform.repository.UserRepository;
+import com.aso.examplatform.model.*;
+import com.aso.examplatform.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,11 +18,12 @@ public class ExamService {
 
     private final ExamRepository examRepository;
     private final QuestionRepository questionRepository;
-    private final UserRepository userRepository;
     private final ExamUserRepository examUserRepository;
+    private final TenantUserCourseRepository tenantUserCourseRepository;
+    private final TenantUserRepository tenantUserRepository;
 
     public List<Exam> listAll(){
-        return examRepository.findAllDeleted(false);
+        return examRepository.findAllByDeleted(false);
     }
     public Exam create(ExamRequest examRequest){
         examRepository.save(examRequest.getExam());
@@ -73,13 +68,14 @@ public class ExamService {
         if (addCandidateRequest.isForAll()) {
             exam.setForAll(true); // If exam is available for all users in the course set for_all to TRUE
             examRepository.save(exam);
-            for (User user : userRepository.findAll()) {
-                examUsers.add(new ExamUser(exam, user));
+            // Get all users of the relevant course and add to list
+            for (TenantUser tenantUser : tenantUserCourseRepository.findTenantUserByCourseId(exam.getCourse().getCourseId())) {
+                examUsers.add(new ExamUser(exam, tenantUser.getUser()));
             }
-
         } else {
-            for (User user : userRepository.findAllById(addCandidateRequest.getTenantUserIds())) {
-                examUsers.add(new ExamUser(exam, user));
+            // Get selected tenant users by id and add to list
+            for (TenantUser tenantUser : tenantUserRepository.findAllById(addCandidateRequest.getTenantUserIds())) {
+                examUsers.add(new ExamUser(exam, tenantUser.getUser()));
             }
         }
         return examUserRepository.saveAll(examUsers);
