@@ -1,10 +1,15 @@
 package com.aso.examplatform.service;
 
+import com.aso.examplatform.dto.AddCandidate;
 import com.aso.examplatform.dto.ExamRequest;
 import com.aso.examplatform.model.Exam;
+import com.aso.examplatform.model.ExamUser;
 import com.aso.examplatform.model.Question;
+import com.aso.examplatform.model.User;
 import com.aso.examplatform.repository.ExamRepository;
+import com.aso.examplatform.repository.ExamUserRepository;
 import com.aso.examplatform.repository.QuestionRepository;
+import com.aso.examplatform.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +22,8 @@ public class ExamService {
 
     private final ExamRepository examRepository;
     private final QuestionRepository questionRepository;
+    private final UserRepository userRepository;
+    private final ExamUserRepository examUserRepository;
 
     public List<Exam> listAll(){
         return examRepository.findAll();
@@ -32,11 +39,14 @@ public class ExamService {
     }
     public List<Question> updateQuestions(ExamRequest examRequest){
         questionRepository.deleteAll(examRequest.getQuestions());
+        List<Question> questionList = null ;
         for (Question question: examRequest.getQuestions()) {
             question.setExam(examRequest.getExam());
-            questionRepository.save(question);
+            assert false;
+            questionList.add(question);
         }
-//        questionRepository.saveAll(examRequest.getQuestions());
+        assert false;
+        questionRepository.saveAll(questionList);
         return examRequest.getQuestions();
     }
     public Exam update(Exam exam) throws Exception{
@@ -58,5 +68,33 @@ public class ExamService {
         Exam exam = examOptional.get();
         exam.setDeleted(true);
         examRepository.save(exam);
+    }
+    public List<ExamUser> addCandidateExam(AddCandidate addCandidate) throws Exception {
+        Optional<Exam> examOptional = examRepository.findById(addCandidate.getExam().getExamId());
+        List<ExamUser> examUser;
+        if (examOptional.isEmpty()) {
+            throw new Exception("Exam not found");
+        } else {
+            examUser = null;
+            if (addCandidate.getExam().isForAll()) {
+                addCandidate.getExam().setForAll(true);
+                examRepository.save(addCandidate.getExam());
+                for (User user : userRepository.findAll()) {
+                    assert false;
+                    examUser.add(new ExamUser(addCandidate.getExam(), user));
+                }
+
+            } else {
+                for (User user : userRepository.findAllById(addCandidate.getTenantUserID())) {
+                    assert false;
+                    examUser.add(new ExamUser(addCandidate.getExam(), user));
+                }
+            }
+            assert false;
+            examUserRepository.saveAll(examUser);
+        }
+
+
+        return examUser;
     }
 }

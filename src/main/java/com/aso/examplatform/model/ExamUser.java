@@ -24,15 +24,19 @@ public class ExamUser {
     private User user;
 
     @Column
-    private double marks;
+    private Double marks =null;
 
-    @Column(columnDefinition="tinyint(1) default 0")
+    @Column(columnDefinition="tinyint(1)")
     private boolean isCompleted;
 
     @Column
-    private long startTime;
+    private Long startTime = null;
 
     @Column
-    private long endTime;
+    private Long endTime = null;
 
+    public ExamUser(Exam exam, User user) {
+        this.exam = exam;
+        this.user = user;
+    }
 }
