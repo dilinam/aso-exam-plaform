@@ -67,6 +67,15 @@ public class CourseController {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
     }
+    @DeleteMapping("/candidate/{id}")
+    public ResponseEntity<Course> removeCandidates(@RequestBody CourseCandidatesRequest courseCandidatesRequest){
+        try {
+            courseService.removeCandidatesFromCourse(courseCandidatesRequest);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
     @GetMapping("/candidate/{id}")
     public ResponseEntity<List<User>> getCandidateCourse(@PathVariable("courseId") Long courseId){

@@ -67,4 +67,14 @@ public class CourseService {
             return tenantUserCourseRepository.saveAll(tenantUserCourses);
         }
     }
+    public void removeCandidatesFromCourse(CourseCandidatesRequest courseCandidatesRequest) throws Exception{
+        Optional<Course> courseOptional = courseRepository.findById(courseCandidatesRequest.getCourseId());
+        List<TenantUser> tenantUser = tenantUserCourseRepository.findTenantUserByCourseId(courseCandidatesRequest.getCourseId());
+        if (courseOptional.isEmpty()){
+            throw new Exception("Course not found");
+        }else {
+            tenantUser.remove(courseOptional);
+        }
+    }
+
 }
