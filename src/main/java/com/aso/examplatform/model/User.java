@@ -53,9 +53,8 @@ public class User {
 
     private boolean superAdmin;
 
-//    @CreationTimestamp
-    private Long createdAt;
-
+    @CreationTimestamp
+    private Timestamp createdAt;
     private String createdBy;
 
     @Override

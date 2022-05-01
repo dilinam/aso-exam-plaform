@@ -17,7 +17,7 @@ public class ModuleAction {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long moduleActionId;
 
-    @Column(nullable = false, length = 100, name = "module_action_end_point")
+    @Column(nullable = false, length = 100)
     @NotBlank(message = "End point name must be required.")
     private String endPoint;
     private String httpMethod;

@@ -24,15 +24,16 @@ public class UserService {
     private final RoleRepository roleRepository;
 
     public List<User> getUsers() {
-        return userRepository.findAll();
+        return userRepository.findAllByDeleted(false);
     }
 
-    public User getUser(Long userId) {
-        return userRepository.getById(userId);
+    public User getUser(Long userId)  throws Exception{
+        Optional<User> optionalUser = userRepository.findById(userId);
+        return optionalUser.orElseThrow(() -> new Exception("User not found"));
     }
 
     public TenantUser addUser(UserRequest userRequest, Tenant tenant){
-        userRequest.getUser().setPassword(BCrypt.hashpw(userRequest.getUser().getPassword(), BCrypt.gensalt()));
+        userRequest.getUser().setPassword(BCrypt.hashpw(userRequest.getUser().getPassword(), BCrypt.gensalt())); // hashing user password
         if(userRepository.findByUsername(userRequest.getUser().getUsername()).isEmpty()){
             userRepository.save(userRequest.getUser());
         }

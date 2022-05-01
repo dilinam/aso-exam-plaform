@@ -30,10 +30,15 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getuser(@PathVariable("id") Long id){
-        return ResponseEntity.ok().body(userService.getUser(id));
+        try {
+            return new ResponseEntity<>(userService.getUser(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
     @PostMapping("")
     public ResponseEntity<?> addUser(@Valid @RequestBody UserRequest userRequest, HttpServletRequest request){
+        userRequest.getUser().setCreatedBy(((User)request.getAttribute("USER")).getUsername()); // set created user
         TenantUser tenantUser = userService.addUser(userRequest,(Tenant) request.getAttribute("TENANT"));
         if(tenantUser == null){
             Map<String, String> validationResults = new HashMap<>();
@@ -52,18 +57,21 @@ public class UserController {
 
     @PostMapping("/examiner")
     public ResponseEntity<User> addExaminer(@Valid @RequestBody User user, HttpServletRequest request){
+        user.setCreatedBy(((User)request.getAttribute("USER")).getUsername());
         userService.addUser(new UserRequest(user, 2L), (Tenant) request.getAttribute("TENANT"));
         return ResponseEntity.ok(user);
     }
 
     @PostMapping("/tenantAdmin")
     public ResponseEntity<User> addTenantAdmin(@Valid @RequestBody User user, HttpServletRequest request){
+        user.setCreatedBy(((User)request.getAttribute("USER")).getUsername());
         userService.addUser(new UserRequest(user, 1L), (Tenant) request.getAttribute("TENANT"));
         return ResponseEntity.ok(user);
     }
 
     @PostMapping("/superAdmin")
     public ResponseEntity<User> addSuperAdmin(@Valid @RequestBody User user, HttpServletRequest request){
+        user.setCreatedBy(((User)request.getAttribute("USER")).getUsername());
         userService.addSuperAdmin(user);
         return ResponseEntity.ok(user);
     }

@@ -23,7 +23,7 @@ public class CourseService {
         return course;
     }
     public Course update(Course course) throws Exception{
-        if (!courseRepository.findById(course.getCourseId()).isPresent()){
+        if (courseRepository.findById(course.getCourseId()).isEmpty()){
             throw new Exception("Course not found");
         }
         courseRepository.save(course);
@@ -35,7 +35,7 @@ public class CourseService {
     }
     public void delete(Long id) throws Exception {
         Optional<Course> courseOptional = courseRepository.findById(id);
-        if (!courseOptional.isPresent()){
+        if (courseOptional.isEmpty()){
             throw new Exception("Course not found");
         }
         Course course = courseOptional.get();
