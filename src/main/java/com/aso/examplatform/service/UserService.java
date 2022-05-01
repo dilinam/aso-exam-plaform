@@ -27,8 +27,9 @@ public class UserService {
         return userRepository.findAllByDeleted(false);
     }
 
-    public User getUser(Long userId) {
-        return userRepository.getById(userId);
+    public User getUser(Long userId)  throws Exception{
+        Optional<User> optionalUser = userRepository.findById(userId);
+        return optionalUser.orElseThrow(() -> new Exception("User not found"));
     }
 
     public TenantUser addUser(UserRequest userRequest, Tenant tenant){
