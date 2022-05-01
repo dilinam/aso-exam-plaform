@@ -33,7 +33,7 @@ public class UserService {
     }
 
     public TenantUser addUser(UserRequest userRequest, Tenant tenant){
-        userRequest.getUser().setPassword(BCrypt.hashpw(userRequest.getUser().getPassword(), BCrypt.gensalt()));
+        userRequest.getUser().setPassword(BCrypt.hashpw(userRequest.getUser().getPassword(), BCrypt.gensalt())); // hashing user password
         if(userRepository.findByUsername(userRequest.getUser().getUsername()).isEmpty()){
             userRepository.save(userRequest.getUser());
         }

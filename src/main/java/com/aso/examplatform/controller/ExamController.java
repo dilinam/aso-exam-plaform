@@ -2,6 +2,7 @@ package com.aso.examplatform.controller;
 
 import com.aso.examplatform.dto.AddCandidateRequest;
 import com.aso.examplatform.dto.ExamRequest;
+import com.aso.examplatform.dto.UpdateQuestionRequest;
 import com.aso.examplatform.model.Exam;
 import com.aso.examplatform.model.ExamUser;
 import com.aso.examplatform.model.Question;
@@ -40,8 +41,13 @@ public class ExamController {
     }
 
     @PutMapping(path = "/Questions")
-    public ResponseEntity<List<Question>> updateQuestions(@Valid @RequestBody ExamRequest examRequest){
-        return new ResponseEntity<>(examService.updateQuestions(examRequest), HttpStatus.OK);
+    public ResponseEntity<List<Question>> updateQuestions(@Valid @RequestBody UpdateQuestionRequest examRequest){
+        try {
+            return new ResponseEntity<>(examService.updateQuestions(examRequest), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     @PutMapping(path = "")
