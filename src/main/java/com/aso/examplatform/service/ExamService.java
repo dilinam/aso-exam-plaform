@@ -32,8 +32,11 @@ public class ExamService {
     }
     public List<Question> updateQuestions(ExamRequest examRequest){
         questionRepository.deleteAll(examRequest.getQuestions());
-        questionRepository.saveAll(examRequest.getQuestions());
-
+        for (Question question: examRequest.getQuestions()) {
+            question.setExam(examRequest.getExam());
+            questionRepository.save(question);
+        }
+//        questionRepository.saveAll(examRequest.getQuestions());
         return examRequest.getQuestions();
     }
     public Exam update(Exam exam) throws Exception{
