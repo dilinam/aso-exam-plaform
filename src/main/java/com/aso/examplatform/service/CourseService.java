@@ -8,6 +8,7 @@ import com.aso.examplatform.repository.TenantUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,24 +58,23 @@ public class CourseService {
 
     public List<TenantUserCourse> addCandidatesToCourse(CourseCandidatesRequest courseCandidatesRequest) throws Exception {
         Optional<Course> courseOptional = courseRepository.findById(courseCandidatesRequest.getCourseId());
-        List<TenantUserCourse> tenantUserCourses = null;
+        List<TenantUserCourse> tenantUserCourses = new ArrayList<>();
         if (courseOptional.isEmpty()) {
             throw new Exception("Course not found");
         } else {
             for (Long id : courseCandidatesRequest.getTenantUsers()) {
-                tenantUserCourses.add(new TenantUserCourse(null,tenantUserRepository.findById(id).orElseThrow(() -> new Exception("User not found")), courseOptional.get()));
+                tenantUserCourses.add(new TenantUserCourse(null,tenantUserRepository.findById(id).orElseThrow(() -> new Exception("User not found")), courseOptional.get(), false));
             }
             return tenantUserCourseRepository.saveAll(tenantUserCourses);
         }
     }
     public void removeCandidatesFromCourse(CourseCandidatesRequest courseCandidatesRequest) throws Exception{
-        Optional<Course> courseOptional = courseRepository.findById(courseCandidatesRequest.getCourseId());
-        List<TenantUser> tenantUser = tenantUserCourseRepository.findTenantUserByCourseId(courseCandidatesRequest.getCourseId());
-        if (courseOptional.isEmpty()){
-            throw new Exception("Course not found");
-        }else {
-            tenantUser.remove(courseOptional);
+        Course course = courseRepository.findById(courseCandidatesRequest.getCourseId()).orElseThrow(() -> new Exception("Course not found")); // get course or throw exception
+        List<TenantUserCourse> tenantUserCourses = tenantUserCourseRepository.findTenantUserCourseByCourseId(courseCandidatesRequest.getCourseId()); // get tenant user courses by course id
+        for(TenantUserCourse tenantUserCourse: tenantUserCourses){
+            tenantUserCourse.setDeleted(true);
         }
+        tenantUserCourseRepository.saveAll(tenantUserCourses);
     }
 
 }

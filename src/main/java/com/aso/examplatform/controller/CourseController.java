@@ -73,7 +73,7 @@ public class CourseController {
             courseService.removeCandidatesFromCourse(courseCandidatesRequest);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
