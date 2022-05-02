@@ -21,7 +21,7 @@ public class CourseService {
     private final TenantUserRepository tenantUserRepository;
 
     public List<Course> listAll() {
-        return (List<Course>) courseRepository.findAll();
+        return (List<Course>) courseRepository.findAllByDeleted(false);
     }
 
     public Course create(Course course) {
@@ -43,7 +43,11 @@ public class CourseService {
     }
 
     public List<User> getCandidates(Long courseId){
-        return tenantUserCourseRepository.findAllByCourseId(courseId);
+        return tenantUserCourseRepository.findAllCandidatesByCourseId(courseId);
+    }
+
+    public List<User> getExaminers(Long courseId){
+        return tenantUserCourseRepository.findAllExaminersByCourseId(courseId);
     }
 
     public void delete(Long id) throws Exception {
@@ -57,16 +61,12 @@ public class CourseService {
     }
 
     public List<TenantUserCourse> addCandidatesToCourse(CourseCandidatesRequest courseCandidatesRequest) throws Exception {
-        Optional<Course> courseOptional = courseRepository.findById(courseCandidatesRequest.getCourseId());
+        Course course = courseRepository.findById(courseCandidatesRequest.getCourseId()).orElseThrow(() -> new Exception("Course not found")); // get course by id or throw exception
         List<TenantUserCourse> tenantUserCourses = new ArrayList<>();
-        if (courseOptional.isEmpty()) {
-            throw new Exception("Course not found");
-        } else {
-            for (Long id : courseCandidatesRequest.getTenantUsers()) {
-                tenantUserCourses.add(new TenantUserCourse(null,tenantUserRepository.findById(id).orElseThrow(() -> new Exception("User not found")), courseOptional.get(), false));
-            }
-            return tenantUserCourseRepository.saveAll(tenantUserCourses);
+        for (Long id : courseCandidatesRequest.getTenantUsers()) {
+            tenantUserCourses.add(new TenantUserCourse(null,tenantUserRepository.findById(id).orElseThrow(() -> new Exception("User not found")), course, false));
         }
+        return tenantUserCourseRepository.saveAll(tenantUserCourses);
     }
     public void removeCandidatesFromCourse(CourseCandidatesRequest courseCandidatesRequest) throws Exception{
         Course course = courseRepository.findById(courseCandidatesRequest.getCourseId()).orElseThrow(() -> new Exception("Course not found")); // get course or throw exception

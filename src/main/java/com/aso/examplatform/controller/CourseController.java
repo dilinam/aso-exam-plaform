@@ -77,10 +77,19 @@ public class CourseController {
         }
     }
 
-    @GetMapping("/candidate/{id}")
+    @GetMapping("/candidate/{courseId}")
     public ResponseEntity<List<User>> getCandidateCourse(@PathVariable("courseId") Long courseId){
         try {
             return new ResponseEntity<>(courseService.getCandidates(courseId), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/examiners/{courseId}")
+    public ResponseEntity<List<User>> getExaminersCourse(@PathVariable("courseId") Long courseId){
+        try {
+            return new ResponseEntity<>(courseService.getExaminers(courseId), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
