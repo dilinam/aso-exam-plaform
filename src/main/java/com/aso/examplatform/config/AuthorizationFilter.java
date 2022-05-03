@@ -33,7 +33,10 @@ public class AuthorizationFilter extends OncePerRequestFilter {
             ServletException, IOException {
 
         // if the request that create tokens ignore them from filtering
-        if(request.getRequestURI().equals("/api/auth/login") || request.getRequestURI().equals("/api/auth/setTenant")){
+        if(request.getRequestURI().equals("/api/auth/login")
+                || request.getRequestURI().equals("/api/auth/setTenant")
+                || request.getRequestURI().equals("/api/auth/getTenants")
+        ){
             filterChain.doFilter(request, response);
             return;
         }
