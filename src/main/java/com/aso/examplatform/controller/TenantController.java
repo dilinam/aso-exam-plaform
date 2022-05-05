@@ -10,18 +10,17 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@CrossOrigin
+@CrossOrigin(origins="*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/api/Tenant")
+@RequestMapping("/api/tenant")
 @RequiredArgsConstructor
 public class TenantController {
-    private TenantService tenantService;
+    private final TenantService tenantService;
 
     @GetMapping("")
     public List<Tenant> getAll(){
         return tenantService.listAll();
     }
-
     @PostMapping(path = "")
     public ResponseEntity<Tenant> save(@Valid @RequestBody Tenant Tenant){
         return new ResponseEntity<>(tenantService.create(Tenant), HttpStatus.CREATED);
