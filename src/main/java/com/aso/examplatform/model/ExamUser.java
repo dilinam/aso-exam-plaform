@@ -27,7 +27,7 @@ public class ExamUser {
     private Double marks =null;
 
     @Column(columnDefinition="tinyint(1)")
-    private boolean isCompleted;
+    private boolean isCompleted = false;
 
     @Column
     private Long startTime = null;

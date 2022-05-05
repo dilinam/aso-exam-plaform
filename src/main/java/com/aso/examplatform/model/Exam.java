@@ -29,14 +29,14 @@ public class Exam{
     @NotBlank(message = "Duration must be required.")
     private String duration;
 
-    @Column(columnDefinition="tinyint(1) default 1")
-    private boolean forAll;
+    @Column(columnDefinition="tinyint(1)")
+    private boolean forAll = true;
 
-    @Column(columnDefinition="tinyint(1) default 1")
-    private boolean status;
+    @Column(columnDefinition="tinyint(1)")
+    private boolean status = true;
 
-    @Column(columnDefinition="tinyint(1) default 0")
-    private boolean deleted;
+    @Column(columnDefinition="tinyint(1)")
+    private boolean deleted = false;
 
     private String createdBy;
     private String createdAt;
@@ -44,4 +44,5 @@ public class Exam{
     @ManyToOne
     @JoinColumn(name = "courseId")
     private Course course;
+
 }

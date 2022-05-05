@@ -18,11 +18,11 @@ public class Tenant {
     private String tenantName;
     private String description;
 
-    @Column(columnDefinition="tinyint(1) default 1")
-    private boolean status;
+    @Column(columnDefinition="tinyint(1)")
+    private boolean status = true;
 
-    @Column(columnDefinition="tinyint(1) default 0")
-    private boolean deleted;
+    @Column(columnDefinition="tinyint(1)")
+    private boolean deleted = false;
 
     private String createdBy;
     private long createdAt;

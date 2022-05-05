@@ -27,11 +27,11 @@ public class TenantUser {
     @JoinColumn(name = "roleId")
     private Role role;
 
-    @Column(columnDefinition="tinyint(1) default 1")
-    private boolean status;
+    @Column(columnDefinition="tinyint(1)")
+    private boolean status = true;
 
     @Column(columnDefinition="tinyint(1) default 0")
-    private boolean deleted;
+    private boolean deleted = false;
 
     public TenantUser(Tenant tenant, User user, Role role) {
         this.tenant = tenant;

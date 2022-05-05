@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@CrossOrigin
+@CrossOrigin(origins="*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/exam")
 @RequiredArgsConstructor
@@ -33,7 +33,7 @@ public class ExamController {
         return new ResponseEntity<>(examService.create(examRequest), HttpStatus.CREATED);
     }
     @PostMapping(path = "/candidate")
-    public ResponseEntity<List<ExamUser>> save(@Valid @RequestBody AddCandidateRequest addCandidateRequest){
+    public ResponseEntity<List<ExamUser>> candiadateSave(@Valid @RequestBody AddCandidateRequest addCandidateRequest){
         try {
             return new ResponseEntity<>(examService.addCandidateExam(addCandidateRequest), HttpStatus.CREATED);
         } catch (Exception e) {
