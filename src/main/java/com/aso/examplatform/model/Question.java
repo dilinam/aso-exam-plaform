@@ -21,9 +21,9 @@ public class Question {
     @NotBlank(message = "Question must be required.")
     private String question;
 
-    @Column(nullable = false, name = "order")
-    @NotBlank(message = "Order must be required.")
-    private int order;
+    @Column(nullable = false, name ="orders")
+    @NotBlank(message ="Order must be required.")
+    private int orders;
 
     @Column(columnDefinition="tinyint(1)")
     private boolean status = true;

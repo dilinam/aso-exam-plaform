@@ -41,6 +41,7 @@ public class User {
     @Column(nullable = false, length = 100, name = "address")
     @NotBlank(message = "Address must be required.")
     private String address;
+
     private String contactNo;
     private String email;
     private Long dob;

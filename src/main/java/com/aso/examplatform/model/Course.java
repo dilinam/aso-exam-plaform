@@ -23,6 +23,8 @@ public class Course {
     private String courseDescription;
     private String courseImage;
 
+    private String courseCode;
+
     @Column(columnDefinition="tinyint(1)")
     private boolean status = true;
 
