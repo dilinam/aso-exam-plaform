@@ -42,6 +42,8 @@ public class User {
     @NotBlank(message = "Address must be required.")
     private String address;
 
+    private String image;
+
     private String contactNo;
     private String email;
     private Long dob;
@@ -68,12 +70,15 @@ public class User {
                 ", lastName='" + lastName + '\'' +
                 ", nic='" + nic + '\'' +
                 ", address='" + address + '\'' +
+                ", image='" + image + '\'' +
                 ", contactNo='" + contactNo + '\'' +
                 ", email='" + email + '\'' +
                 ", dob=" + dob +
                 ", status=" + status +
                 ", deleted=" + deleted +
                 ", superAdmin=" + superAdmin +
+                ", createdAt=" + createdAt +
+                ", createdBy='" + createdBy + '\'' +
                 '}';
     }
 }

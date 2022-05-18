@@ -22,7 +22,7 @@ public class RoleService {
         return role;
     }
     public Role update(Role role) throws Exception{
-        if (!roleRepository.findById(role.getRoleId()).isPresent()){
+        if (roleRepository.findById(role.getRoleId()).isEmpty()){
             throw new Exception("Role not found");
         }
         roleRepository.save(role);

@@ -20,4 +20,7 @@ public interface TenantUserCourseRepository extends JpaRepository<TenantUserCour
 
     @Query("SELECT uc FROM TenantUserCourse uc WHERE uc.course.courseId=?1")
     List<TenantUserCourse> findTenantUserCourseByCourseId(Long courseId);
+
+    @Query("SELECT uc FROM TenantUserCourse uc WHERE uc.tenantUser.user.userId=?1")
+    TenantUserCourse findTenantUserCourseByUserId(Long userId);
 }

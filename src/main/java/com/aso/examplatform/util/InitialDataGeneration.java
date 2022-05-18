@@ -41,7 +41,7 @@ public class InitialDataGeneration implements CommandLineRunner {
 
             // save user
             users.add(new User(null, "dilina", BCrypt.hashpw("1234", BCrypt.gensalt()),
-                    "Dilina", "Madhushan", "961111111v", "abc, abc", "1234567890",
+                    "Dilina", "Madhushan", "961111111v", "abc, abc","this is img", "1234567890",
                     "dilina@gmail.com", 833736600L, true, false, false, null, null));
             users = userRepository.saveAll(users);
 

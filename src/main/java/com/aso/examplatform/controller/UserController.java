@@ -3,6 +3,7 @@ package com.aso.examplatform.controller;
 import com.aso.examplatform.dto.UserRequest;
 import com.aso.examplatform.model.Tenant;
 import com.aso.examplatform.model.TenantUser;
+import com.aso.examplatform.model.TenantUserCourse;
 import com.aso.examplatform.model.User;
 import com.aso.examplatform.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,15 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    @GetMapping("/UserCourse/{id}")
+    public ResponseEntity<TenantUserCourse> getUserCourse(@PathVariable("id") Long id){
+        try {
+            return new ResponseEntity<>(userService.getTenantUserCourse(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PostMapping("")
     public ResponseEntity<?> addUser(@Valid @RequestBody UserRequest userRequest, HttpServletRequest request){
         userRequest.getUser().setCreatedBy(((User)request.getAttribute("USER")).getUsername()); // set created user

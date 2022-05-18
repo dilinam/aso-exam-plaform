@@ -1,11 +1,9 @@
 package com.aso.examplatform.service;
 
 import com.aso.examplatform.dto.UserRequest;
-import com.aso.examplatform.model.Role;
-import com.aso.examplatform.model.Tenant;
-import com.aso.examplatform.model.TenantUser;
-import com.aso.examplatform.model.User;
+import com.aso.examplatform.model.*;
 import com.aso.examplatform.repository.RoleRepository;
+import com.aso.examplatform.repository.TenantUserCourseRepository;
 import com.aso.examplatform.repository.TenantUserRepository;
 import com.aso.examplatform.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +18,7 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final TenantUserCourseRepository tenantUserCourseRepository;
     private final TenantUserRepository tenantUserRepository;
     private final RoleRepository roleRepository;
 
@@ -30,6 +29,11 @@ public class UserService {
     public User getUser(Long userId)  throws Exception{
         Optional<User> optionalUser = userRepository.findById(userId);
         return optionalUser.orElseThrow(() -> new Exception("User not found"));
+    }
+
+    public TenantUserCourse getTenantUserCourse(Long userId) throws Exception{
+        Optional<TenantUserCourse> optionalTenantUserCourse = Optional.ofNullable(tenantUserCourseRepository.findTenantUserCourseByUserId(userId));
+        return optionalTenantUserCourse.orElseThrow(() -> new Exception("User not found"));
     }
 
     public TenantUser addUser(UserRequest userRequest, Tenant tenant){
