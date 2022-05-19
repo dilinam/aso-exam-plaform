@@ -32,7 +32,7 @@ public class UserService {
     }
 
     public TenantUserCourse getTenantUserCourse(Long userId) throws Exception{
-        Optional<TenantUserCourse> optionalTenantUserCourse = Optional.ofNullable(tenantUserCourseRepository.findTenantUserCourseByUserId(userId));
+        Optional<TenantUserCourse> optionalTenantUserCourse = tenantUserCourseRepository.findTenantUserCourseByUserId(userId);
         return optionalTenantUserCourse.orElseThrow(() -> new Exception("User not found"));
     }
 

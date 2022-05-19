@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TenantUserCourseRepository extends JpaRepository<TenantUserCourse, Long> {
     @Query("SELECT u FROM TenantUser u JOIN TenantUserCourse uc WHERE uc.course.courseId=?1")
@@ -22,5 +23,5 @@ public interface TenantUserCourseRepository extends JpaRepository<TenantUserCour
     List<TenantUserCourse> findTenantUserCourseByCourseId(Long courseId);
 
     @Query("SELECT uc FROM TenantUserCourse uc WHERE uc.tenantUser.user.userId=?1")
-    TenantUserCourse findTenantUserCourseByUserId(Long userId);
+    Optional<TenantUserCourse> findTenantUserCourseByUserId(Long userId);
 }

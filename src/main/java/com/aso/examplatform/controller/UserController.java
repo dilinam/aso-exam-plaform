@@ -72,7 +72,7 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-    @PostMapping("/tenantAdmin")
+    @PostMapping("/tenantadmin")
     public ResponseEntity<User> addTenantAdmin(@Valid @RequestBody User user, HttpServletRequest request){
         user.setCreatedBy(((User)request.getAttribute("USER")).getUsername());
         userService.addUser(new UserRequest(user, 1L), (Tenant) request.getAttribute("TENANT"));
