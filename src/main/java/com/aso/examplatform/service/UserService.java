@@ -57,7 +57,19 @@ public class UserService {
     }
 
     public User updateUser(User user) throws Exception{
-        user = userRepository.findById(user.getUserId()).orElseThrow(() -> new Exception("User not found"));
-        return userRepository.save(user);
+        if (userRepository.findById(user.getUserId()).isEmpty()){
+            throw new Exception("User not found");
+        }
+        userRepository.save(user);
+        return user;
+    }
+    public void delete(Long id) throws Exception{
+        Optional<User> userOptional= userRepository.findById(id);
+        if (userOptional.isEmpty()){
+            throw new Exception("User not found");
+        }
+        User user = userOptional.get();
+        user.setDeleted(true);
+        userRepository.save(user);
     }
 }
