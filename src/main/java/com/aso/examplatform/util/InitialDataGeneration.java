@@ -60,9 +60,14 @@ public class InitialDataGeneration implements CommandLineRunner {
             tenantUsers = tenantUserRepository.saveAll(tenantUsers);
 
             // save modules
-            modules.add(new Module(null, "USER"));
-            modules.add(new Module(null, "TENANT"));
-            modules.add(new Module(null, "EXAM"));
+            Module userModule = new Module(null, "USER");
+            Module tenantModule = new Module(null, "TENANT");
+            Module examModule = new Module(null, "EXAM");
+            Module courseModule = new Module(null, "COURSE");
+            modules.add(userModule);
+            modules.add(tenantModule);
+            modules.add(examModule);
+            modules.add(courseModule);
             modules = moduleRepository.saveAll(modules);
 
             // save actions
@@ -73,37 +78,64 @@ public class InitialDataGeneration implements CommandLineRunner {
             actions = actionRepository.saveAll(actions);
 
             // save module actions
-            Module userModule = null;
-            for (int i = 0; i < modules.size(); i++){
-                if(modules.get(i).getModuleName().equals("USER")){
-                    userModule = modules.get(i);
-                }
-            }
-            for(int i=0; i< actions.size(); i++){
-                if(actions.get(i).getActionName().equals("VIEW")){
-                    moduleActions.add(new ModuleAction(null, "/api/users", "GET",
-                            actions.get(i),userModule, roles));
-                }else if(actions.get(i).getActionName().equals("ADD")){
-                    moduleActions.add(new ModuleAction(null, "/api/users", "POST",
-                            actions.get(i),userModule, roles));
-                    moduleActions.add(new ModuleAction(null, "/api/users/candidate", "POST",
-                            actions.get(i),userModule, roles));
-                }else if(actions.get(i).getActionName().equals("UPDATE")){
-                    moduleActions.add(new ModuleAction(null, "/api/users", "PUT",
-                            actions.get(i),userModule, roles));
-                }else if(actions.get(i).getActionName().equals("DELETE")){
-                    moduleActions.add(new ModuleAction(null, "/api/users", "DELETE",
-                            actions.get(i),userModule, roles));
-                }else{
-                    if(actions.get(i).getActionName().equals("VIEW")){
+            for (Action action : actions) {
+                switch (action.getActionName()) {
+                    case "ADD":
+                        moduleActions.add(new ModuleAction(null, "/api/users", "POST",
+                                action, userModule, roles));
+                        moduleActions.add(new ModuleAction(null, "/api/users/candidate", "POST",
+                                action, userModule, roles));
+                        moduleActions.add(new ModuleAction(null, "/api/tenant", "POST",
+                                action, tenantModule, roles));
+                        moduleActions.add(new ModuleAction(null, "/api/exam", "POST",
+                                action, examModule, roles));
+                        moduleActions.add(new ModuleAction(null, "/api/Question", "POST",
+                                action, examModule, roles));
+                        moduleActions.add(new ModuleAction(null, "/api/course", "POST",
+                                action, courseModule, roles));
+                        break;
+                    case "UPDATE":
+                        moduleActions.add(new ModuleAction(null, "/api/users", "PUT",
+                                action, userModule, roles));
+                        moduleActions.add(new ModuleAction(null, "/api/tenant", "PUT",
+                                action, tenantModule, roles));
+                        moduleActions.add(new ModuleAction(null, "/api/exam", "PUT",
+                                action, examModule, roles));
+                        moduleActions.add(new ModuleAction(null, "/api/Question", "PUT",
+                                action, examModule, roles));
+                        moduleActions.add(new ModuleAction(null, "/api/course", "PUT",
+                                action, courseModule, roles));
+                        break;
+                    case "DELETE":
+                        moduleActions.add(new ModuleAction(null, "/api/users", "DELETE",
+                                action, userModule, roles));
+                        moduleActions.add(new ModuleAction(null, "/api/tenant", "DELETE",
+                                action, tenantModule, roles));
+                        moduleActions.add(new ModuleAction(null, "/api/exam", "DELETE",
+                                action, examModule, roles));
+                        moduleActions.add(new ModuleAction(null, "/api/Question", "DELETE",
+                                action, examModule, roles));
+                        moduleActions.add(new ModuleAction(null, "/api/course", "DELETE",
+                                action, courseModule, roles));
+                        break;
+                    case "VIEW":
+                    default:
                         moduleActions.add(new ModuleAction(null, "/api/users", "GET",
-                                actions.get(i),userModule, roles));
-                    }
+                                action, userModule, roles));
+                        moduleActions.add(new ModuleAction(null, "/api/tenant", "GET",
+                                action, tenantModule, roles));
+                        moduleActions.add(new ModuleAction(null, "/api/exam", "GET",
+                                action, examModule, roles));
+                        moduleActions.add(new ModuleAction(null, "/api/Question", "GET",
+                                action, examModule, roles));
+                        moduleActions.add(new ModuleAction(null, "/api/course", "GET",
+                                action, courseModule, roles));
+                        break;
                 }
             }
             moduleActions = moduleActionRepository.saveAll(moduleActions);
-            for (int i = 0; i < roles.size(); i++){
-                roles.get(i).setModuleActions(moduleActions);
+            for (Role role : roles) {
+                role.setModuleActions(moduleActions);
             }
             roleRepository.saveAll(roles);
 
