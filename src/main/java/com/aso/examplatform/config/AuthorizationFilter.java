@@ -38,6 +38,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
         // if the request that create tokens ignore them from filtering
         if(request.getRequestURI().equals("/api/auth/login")
                 || request.getRequestURI().equals("/api/auth/setTenant")
+                || request.getRequestURI().equals("/api/auth/getLoggedUser")
                 || request.getRequestURI().equals("/api/auth/getTenants")
                 || request.getMethod().equalsIgnoreCase("OPTIONS")
         ){

@@ -4,6 +4,7 @@ import com.aso.examplatform.dto.JwtToken;
 import com.aso.examplatform.dto.LoginRequest;
 import com.aso.examplatform.dto.TenantRequest;
 import com.aso.examplatform.model.Tenant;
+import com.aso.examplatform.model.User;
 import com.aso.examplatform.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -49,6 +50,19 @@ public class AuthController {
             return new ResponseEntity<>(authService.getTenants(jwtTokenHeader.substring(7)), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/getLoggedUser")
+    public ResponseEntity<User> getLoggedUser(HttpServletRequest request){
+        try{
+            String jwtTokenHeader = request.getHeader("Authorization");
+            if(jwtTokenHeader == null){
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            }
+            return new ResponseEntity<>(authService.getUser(jwtTokenHeader.substring(7)), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 

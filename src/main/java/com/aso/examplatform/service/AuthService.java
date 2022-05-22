@@ -68,4 +68,10 @@ public class AuthService {
     public List<Tenant> getTenants(String jwtToken){
         return userRepository.findTenants(jwtTokenUtil.getUsernameFromToken(jwtToken));
     }
+
+    public User getUser(String jwtToken) throws Exception{
+        User user =  userRepository.findByUsername(jwtTokenUtil.getUsernameFromToken(jwtToken)).orElseThrow(() -> new Exception("User Not Found"));
+        user.setPassword("");
+        return user;
+    }
 }
