@@ -22,4 +22,7 @@ public class TenantUserCourse {
     @ManyToOne
     @JoinColumn(name = "courseId")
     private Course course;
+
+    @Column(columnDefinition = "tinyint(1)")
+    private boolean deleted = false;
 }

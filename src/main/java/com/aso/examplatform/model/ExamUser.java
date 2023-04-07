@@ -10,32 +10,33 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TenantUser {
+public class ExamUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long tenantUserId;
+    private Long examUserId;
 
     @ManyToOne
-    @JoinColumn(name = "tenantId")
-    private Tenant tenant;
+    @JoinColumn(name = "examId")
+    private Exam exam;
 
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "roleId")
-    private Role role;
+    @Column
+    private Double marks =null;
 
     @Column(columnDefinition="tinyint(1)")
-    private boolean status = true;
+    private boolean isCompleted = false;
 
-    @Column(columnDefinition="tinyint(1) default 0")
-    private boolean deleted = false;
+    @Column
+    private Long startTime = null;
 
-    public TenantUser(Tenant tenant, User user, Role role) {
-        this.tenant = tenant;
+    @Column
+    private Long endTime = null;
+
+    public ExamUser(Exam exam, User user) {
+        this.exam = exam;
         this.user = user;
-        this.role = role;
     }
 }

@@ -1,5 +1,6 @@
 package com.aso.examplatform.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,6 @@ import java.util.List;
 public class Role {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long roleId;
 
     @Column(nullable = false, length = 100, name = "role_name")
@@ -23,5 +23,6 @@ public class Role {
     private String roleName;
 
     @ManyToMany
+    @JsonIgnore
     private List<ModuleAction> moduleActions;
 }

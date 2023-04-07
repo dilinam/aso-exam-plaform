@@ -41,18 +41,18 @@ public class InitialDataGeneration implements CommandLineRunner {
 
             // save user
             users.add(new User(null, "dilina", BCrypt.hashpw("1234", BCrypt.gensalt()),
-                    "Dilina", "Madhushan", "961111111v", "abc, abc", "1234567890",
-                    "dilina@gmail.com", 833736600L, true, false, false));
+                    "Dilina", "Madhushan", "961111111v", "abc, abc","this is img", "1234567890",
+                    "dilina@gmail.com", 833736600L, true, false, false, null, null));
             users = userRepository.saveAll(users);
 
             // save tenants
-            tenants.add(new Tenant(null, "TEST", "Test Description", true, false, null, null));
+            tenants.add(new Tenant(null, "TEST", "Test Description", true, false, null, 0L, null, 0L));
             tenants = tenantRepository.saveAll(tenants);
 
             // save roles
-            roles.add(new Role(null, "TENANT_ADMIN", null));
-            roles.add(new Role(null, "INVIGILATOR", null));
-            roles.add(new Role(null, "CANDIDATE", null));
+            roles.add(new Role(1L, "TENANT_ADMIN", null));
+            roles.add(new Role(2L, "EXAMINER", null));
+            roles.add(new Role(3L, "CANDIDATE", null));
             roles = roleRepository.saveAll(roles);
 
             // save tenant users
@@ -85,6 +85,8 @@ public class InitialDataGeneration implements CommandLineRunner {
                             actions.get(i),userModule, roles));
                 }else if(actions.get(i).getActionName().equals("ADD")){
                     moduleActions.add(new ModuleAction(null, "/api/users", "POST",
+                            actions.get(i),userModule, roles));
+                    moduleActions.add(new ModuleAction(null, "/api/users/candidate", "POST",
                             actions.get(i),userModule, roles));
                 }else if(actions.get(i).getActionName().equals("UPDATE")){
                     moduleActions.add(new ModuleAction(null, "/api/users", "PUT",

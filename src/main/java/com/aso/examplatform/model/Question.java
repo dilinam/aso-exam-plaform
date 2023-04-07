@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Entity
 @Data
@@ -14,16 +16,22 @@ public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long questionId;
-    private String question;
-    private int order;
 
-    @Column(columnDefinition="tinyint(1) default 1")
-    private boolean status;
+    @Column(nullable = false, length = 100, name = "question")
+    @NotBlank(message = "Question must be required.")
+    private String question;
+
+    @Column(nullable = false, name ="orders")
+    @NotBlank(message ="Order must be required.")
+    private int orders;
+
+    @Column(columnDefinition="tinyint(1)")
+    private boolean status = true;
 
     private String filePath;
 
-    @Column(columnDefinition="tinyint(1) default 0")
-    private boolean deleted;
+    @Column(columnDefinition="tinyint(1)")
+    private boolean deleted = false;
 
     private String createdBy;
     private String createdAt;
@@ -35,4 +43,7 @@ public class Question {
     @ManyToOne
     @JoinColumn(name = "examId")
     private Exam exam;
+
+    @OneToMany
+    private List<Answer> answers;
 }

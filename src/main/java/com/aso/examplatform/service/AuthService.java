@@ -3,6 +3,7 @@ package com.aso.examplatform.service;
 import com.aso.examplatform.dto.JwtToken;
 import com.aso.examplatform.dto.LoginRequest;
 import com.aso.examplatform.dto.TenantRequest;
+import com.aso.examplatform.model.Tenant;
 import com.aso.examplatform.model.TenantUser;
 import com.aso.examplatform.model.User;
 import com.aso.examplatform.repository.TenantUserRepository;
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -61,5 +63,9 @@ public class AuthService {
         } catch(Exception e){
             return null;
         }
+    }
+
+    public List<Tenant> getTenants(String jwtToken){
+        return userRepository.findTenants(jwtTokenUtil.getUsernameFromToken(jwtToken));
     }
 }

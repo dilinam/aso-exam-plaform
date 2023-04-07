@@ -10,6 +10,7 @@ import com.aso.examplatform.util.JwtTokenUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -17,7 +18,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Optional;
+
 
 @Component
 @RequiredArgsConstructor
@@ -33,7 +36,11 @@ public class AuthorizationFilter extends OncePerRequestFilter {
             ServletException, IOException {
 
         // if the request that create tokens ignore them from filtering
-        if(request.getRequestURI().equals("/api/auth/login") || request.getRequestURI().equals("/api/auth/setTenant")){
+        if(request.getRequestURI().equals("/api/auth/login")
+                || request.getRequestURI().equals("/api/auth/setTenant")
+                || request.getRequestURI().equals("/api/auth/getTenants")
+                || request.getMethod().equalsIgnoreCase("OPTIONS")
+        ){
             filterChain.doFilter(request, response);
             return;
         }
@@ -83,7 +90,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                             filterChain.doFilter(request, response);
                         }else{
                             // If user does not have access to endpoint
-                            response.getWriter().write("Access Defined");
+                            response.getWriter().write("Access Denied");
                             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                         }
                     }else{
